@@ -35,11 +35,11 @@ ENV LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
 LABEL com.lacledeslan.build-node=$BUILDNODE `
       org.label-schema.schema-version="1.0" `
-      org.label-schema.url="https://github.com/LacledesLAN/README.1ST" `
+      org.label-schema.url="https://github.com/Jaws576/TF2C_Server/README.1ST" `
       org.label-schema.vcs-ref=$SOURCE_COMMIT `
-      org.label-schema.vendor="Laclede's LAN" `
+      org.label-schema.vendor="Jaws" `
       org.label-schema.description="TF2 Classic Dedicated Server" `
-      org.label-schema.vcs-url="https://github.com/LacledesLAN/gamesvr-tf2classic"
+      org.label-schema.vcs-url="https://github.com/Jaws576/TF2C_Server"
 
 # Set up Enviornment
 RUN useradd --home /app --gid root --system TF2Classic &&`
