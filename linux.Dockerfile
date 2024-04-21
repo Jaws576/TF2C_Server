@@ -6,16 +6,22 @@ RUN apt update &&`
         apt install libxcb-xinerama0 -y
 
 # Download TF2 Classic server files from content server
-RUN echo "Downloading Server Files From Content Server" &&`
-        mkdir --parents /tmp/ &&`
-        curl -sSL "https://wiki.tf2classic.com/kachemak/tf2classic.zip" -o /tmp/tf2classic.zip &&`
-    echo "Extracting" &&`
-        7z x -o/output/ /tmp/tf2classic.zip &&`
-        ls /output &&`
-        rm -f /tmp/tf2classic.zip;
+#RUN echo "Downloading Server Files From Content Server" &&`
+#        mkdir --parents /tmp/ &&`
+#        curl -sSL "https://wiki.tf2classic.com/kachemak/tf2classic.zip" -o /tmp/tf2classic.zip &&`
+#    echo "Extracting" &&`
+#        7z x -o/output/ /tmp/tf2classic.zip &&`
+#        ls /output &&`
+#        rm -f /tmp/tf2classic.zip;
 
 # Download Source SDK Base 2013 Dedicated Server
 RUN /app/steamcmd.sh +login anonymous +force_install_dir /output/srcds2013 +app_update 244310 validate +quit;
+
+RUN echo "Run community self-updater" &&`
+    mkdir --parents /updater &&`
+    wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2CDownloaderLinux" -P /updater &&`
+    chmod +x /updater/TF2CDownloaderLinux &&`
+    /updater/TF2CDownloaderLinux --update /output/;
 
 #=======================================================================
 FROM debian:bullseye-slim
