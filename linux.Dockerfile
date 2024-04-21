@@ -10,7 +10,7 @@ RUN echo "Downloading Server Files From Content Server" &&`
         mkdir --parents /tmp/ &&`
         curl -sSL "https://wiki.tf2classic.com/kachemak/tf2classic.zip" -o /tmp/tf2classic.zip &&`
     echo "Extracting" &&`
-        7z x -o/output/ /tmp/tf2classic.zip &&`
+        7z x -o /output/ /tmp/tf2classic.zip &&`
         rm -f /tmp/tf2classic.zip;
 
 # Download Source SDK Base 2013 Dedicated Server
