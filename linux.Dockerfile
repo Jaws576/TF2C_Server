@@ -14,14 +14,14 @@ RUN apt update &&`
 #        ls /output &&`
 #        rm -f /tmp/tf2classic.zip;
 
-# Download Source SDK Base 2013 Dedicated Server
-RUN /app/steamcmd.sh +login anonymous +force_install_dir /output/srcds2013 +app_update 244310 validate +quit;
-
 RUN echo "Run community self-updater" &&`
     mkdir --parents /updater &&`
     wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2CDownloaderLinux" -P /updater &&`
     chmod +x /updater/TF2CDownloaderLinux &&`
-    /updater/TF2CDownloaderLinux --update /output/;
+    /updater/TF2CDownloaderLinux --install /output/;
+
+# Download Source SDK Base 2013 Dedicated Server
+RUN /app/steamcmd.sh +login anonymous +force_install_dir /output/srcds2013 +app_update 244310 validate +quit;
 
 #=======================================================================
 FROM debian:bullseye-slim
