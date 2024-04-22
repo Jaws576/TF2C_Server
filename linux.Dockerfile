@@ -66,6 +66,8 @@ RUN echo "forcibly link server_srv.so" &&`
     rm -rf /app/bin/libstdc++.so.6;
 
 COPY --chown=TF2Classic:root ./dist/linux/ll-tests /app/ll-tests
+Run true
+COPY --chown=TF2Classic:root ./dist/linux /app/
 
 # Fix bad so names
 RUN chmod +x /app/ll-tests/*.sh &&`
