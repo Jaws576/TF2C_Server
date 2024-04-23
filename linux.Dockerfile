@@ -58,8 +58,8 @@ COPY --chown=TF2Classic:root --from=tf2classic-builder /updater /app/updater
 
 
 RUN echo "Run community self-updater" &&`
-    chmod +x /updater/TF2CDownloaderLinux &&`
-    /updater/TF2CDownloaderLinux --install /app/;
+    chmod +x /app/updater/TF2CDownloaderLinux &&`
+    /app/updater/TF2CDownloaderLinux --install /app/;
 
 RUN echo "forcibly link server_srv.so" &&`
     rm -rf /app/tf2classic//bin/server_srv.so &&`
