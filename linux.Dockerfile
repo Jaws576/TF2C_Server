@@ -13,6 +13,7 @@ RUN apt update &&`
 #        7z x -o/output/ /tmp/tf2classic.zip &&`
 #        ls /output &&`
 #        rm -f /tmp/tf2classic.zip;
+RUN wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2CDownloaderLinux" -P /updater;
 
 # Download Source SDK Base 2013 Dedicated Server
 RUN /app/steamcmd.sh +login anonymous +force_install_dir /output/srcds2013 +app_update 244310 validate +quit;
@@ -28,6 +29,7 @@ HEALTHCHECK NONE
 RUN dpkg --add-architecture i386 &&`
     apt-get update && apt-get install -y `
         ca-certificates lib32gcc-s1 libtinfo5:i386 libcurl4-gnutls-dev:i386 libstdc++6 libstdc++6:i386 libtcmalloc-minimal4:i386 locales locales-all tmux zlib1g:i386 &&`
+    apt-get install libxcb-xinerama0 -y &&`
     apt-get clean &&`
     echo "LC_ALL=en_US.UTF-8" >> /etc/environment &&`
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
@@ -46,16 +48,16 @@ LABEL com.lacledeslan.build-node=$BUILDNODE `
 RUN useradd --home /app --gid root --system TF2Classic &&`
     mkdir -p /app/tf2classic/logs &&`
     mkdir -p /app/ll-tests &&`
+    mkdir --parents /app/updater &&`
     chown TF2Classic:root -R /app;
 
 # `RUN true` lines are work around for https://github.com/moby/moby/issues/36573
 COPY --chown=TF2Classic:root --from=tf2classic-builder /output/srcds2013 /app
 RUN true
+COPY --chown=TF2Classic:root --from=tf2classic-builder /updater /app/updater
 
 
 RUN echo "Run community self-updater" &&`
-    mkdir --parents /updater &&`
-    wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2CDownloaderLinux" -P /updater &&`
     chmod +x /updater/TF2CDownloaderLinux &&`
     /updater/TF2CDownloaderLinux --install /app/;
 
