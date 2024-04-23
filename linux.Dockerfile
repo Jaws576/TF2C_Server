@@ -13,12 +13,7 @@ RUN apt update &&`
 #        7z x -o/output/ /tmp/tf2classic.zip &&`
 #        ls /output &&`
 #        rm -f /tmp/tf2classic.zip;
-
-RUN echo "Run community self-updater" &&`
-    mkdir --parents /updater &&`
-    wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2CDownloaderLinux" -P /updater &&`
-    chmod +x /updater/TF2CDownloaderLinux &&`
-    /updater/TF2CDownloaderLinux --install /output/;
+RUN wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2CDownloaderLinux" -P /updater;
 
 # Download Source SDK Base 2013 Dedicated Server
 RUN /app/steamcmd.sh +login anonymous +force_install_dir /output/srcds2013 +app_update 244310 validate +quit;
@@ -34,6 +29,7 @@ HEALTHCHECK NONE
 RUN dpkg --add-architecture i386 &&`
     apt-get update && apt-get install -y `
         ca-certificates lib32gcc-s1 libtinfo5:i386 libcurl4-gnutls-dev:i386 libstdc++6 libstdc++6:i386 libtcmalloc-minimal4:i386 locales locales-all tmux zlib1g:i386 &&`
+    apt-get install libxcb-xinerama0 -y &&`
     apt-get clean &&`
     echo "LC_ALL=en_US.UTF-8" >> /etc/environment &&`
     rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
@@ -52,13 +48,20 @@ LABEL com.lacledeslan.build-node=$BUILDNODE `
 RUN useradd --home /app --gid root --system TF2Classic &&`
     mkdir -p /app/tf2classic/logs &&`
     mkdir -p /app/ll-tests &&`
+    mkdir --parents /app/updater &&`
     chown TF2Classic:root -R /app;
 
 # `RUN true` lines are work around for https://github.com/moby/moby/issues/36573
 COPY --chown=TF2Classic:root --from=tf2classic-builder /output/srcds2013 /app
 RUN true
+COPY --chown=TF2Classic:root --from=tf2classic-builder /updater /app/updater
 
-COPY --chown=TF2Classic:root --from=tf2classic-builder /output/tf2classic /app/tf2classic
+
+RUN echo "Run community self-updater" &&`
+    chmod +x /app/updater/TF2CDownloaderLinux &&`
+    /app/updater/TF2CDownloaderLinux --install /app/ &&`
+    rm -rf /var/tmp/*;
+
 RUN echo "forcibly link server_srv.so" &&`
     rm -rf /app/tf2classic//bin/server_srv.so &&`
     ln -s /app/tf2classic/bin/server.so /app/tf2classic/bin/server_srv.so &&`
@@ -71,6 +74,9 @@ COPY --chown=TF2Classic:root ./dist/linux /app/
 
 # Fix bad so names
 RUN chmod +x /app/ll-tests/*.sh &&`
+    ln -s /app/bin/engine_srv.so /app/bin/engine.so &&`
+    ln -s /app/bin/datacache_srv.so /app/bin/datacache.so &&`
+    ln -s /app/bin/dedicated_srv.so /app/bin/dedicated.so &&`
     ln -s /app/bin/vphysics_srv.so /app/bin/vphysics.so &&`
     ln -s /app/bin/studiorender_srv.so /app/bin/studiorender.so &&`
     ln -s /app/bin/soundemittersystem_srv.so /app/bin/soundemittersystem.so &&`
@@ -90,3 +96,4 @@ WORKDIR /app
 CMD ["/bin/bash"]
 
 ONBUILD USER root
+
