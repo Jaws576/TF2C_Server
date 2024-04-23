@@ -75,7 +75,7 @@ COPY --chown=TF2Classic:root ./dist/linux /app/
 RUN chmod +x /app/ll-tests/*.sh &&`
     ln -s /app/bin/engine_srv.so /app/bin/engine.so &&`
     ln -s /app/bin/datacache_srv.so /app/bin/datacache.so &&`
-    ln -s /app/bin/dedicated_srv.so /app/bin/dedicated/so &&`
+    ln -s /app/bin/dedicated_srv.so /app/bin/dedicated.so &&`
     ln -s /app/bin/vphysics_srv.so /app/bin/vphysics.so &&`
     ln -s /app/bin/studiorender_srv.so /app/bin/studiorender.so &&`
     ln -s /app/bin/soundemittersystem_srv.so /app/bin/soundemittersystem.so &&`
