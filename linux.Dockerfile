@@ -14,12 +14,6 @@ RUN apt update &&`
 #        ls /output &&`
 #        rm -f /tmp/tf2classic.zip;
 
-RUN echo "Run community self-updater" &&`
-    mkdir --parents /updater &&`
-    wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2CDownloaderLinux" -P /updater &&`
-    chmod +x /updater/TF2CDownloaderLinux &&`
-    /updater/TF2CDownloaderLinux --install /output/;
-
 # Download Source SDK Base 2013 Dedicated Server
 RUN /app/steamcmd.sh +login anonymous +force_install_dir /output/srcds2013 +app_update 244310 validate +quit;
 
@@ -58,7 +52,13 @@ RUN useradd --home /app --gid root --system TF2Classic &&`
 COPY --chown=TF2Classic:root --from=tf2classic-builder /output/srcds2013 /app
 RUN true
 
-COPY --chown=TF2Classic:root --from=tf2classic-builder /output/tf2classic /app/tf2classic
+
+RUN echo "Run community self-updater" &&`
+    mkdir --parents /updater &&`
+    wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2CDownloaderLinux" -P /updater &&`
+    chmod +x /updater/TF2CDownloaderLinux &&`
+    /updater/TF2CDownloaderLinux --install /app/;
+
 RUN echo "forcibly link server_srv.so" &&`
     rm -rf /app/tf2classic//bin/server_srv.so &&`
     ln -s /app/tf2classic/bin/server.so /app/tf2classic/bin/server_srv.so &&`
