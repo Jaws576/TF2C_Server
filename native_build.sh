@@ -30,6 +30,7 @@ chmod +x /app/updater/TF2CDownloaderLinux
 rm -rf /var/tmp/*;
 
 cp -r ./dist/linux/* /app/server/
+cat /home/ubuntu/localserver.cfg >> /app/server/tf2classic/cfg/server.cfg
 
 rm -rf /app/server/tf2classic/bin/server_srv.so;
 ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so;
