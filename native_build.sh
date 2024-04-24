@@ -44,4 +44,6 @@ ln -s /app/server/bin/materialsystem_srv.so /app/server/bin/materialsystem.so;
 
 mkdir --parents /home/ubuntu/.steam/sdk32;
 ln -s /app/server/bin/steamclient.so /home/ubuntu/.steam/sdk32/steamclient.so;
+
+cp ./rc.local /etc/
 chown -R ubuntu /app/
