@@ -2,6 +2,7 @@
 # Install dependencies for TF2CDownloaderLinux
 apt-get update;
 apt-get install libxcb-xinerama0 -y;
+apt-get install screen -y;
 
 
 dpkg --add-architecture i386;
