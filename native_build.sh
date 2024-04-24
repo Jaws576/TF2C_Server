@@ -16,8 +16,7 @@ wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2C
 wget -qO- http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar xz -C /app/steamcmd;
 
 # Download Source SDK Base 2013 Dedicated Server
-su -c "steamcmd +quit" ubuntu;
-su -c "steamcmd +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit" ubuntu;
+steamcmd +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
 
 mkdir -p /app/server/tf2classic/logs;
 mkdir -p /app/server/ll-tests;
