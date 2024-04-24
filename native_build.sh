@@ -24,7 +24,6 @@ mkdir -p /app/server/ll-tests;
 chmod +x /app/updater/TF2CDownloaderLinux
 /app/updater/TF2CDownloaderLinux --install /app/server/;
 rm -rf /var/tmp/*;
-apt-get purge steamcmd -y
 
 cp -r ./dist/linux/* /app/server/
 
