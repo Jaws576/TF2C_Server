@@ -17,7 +17,7 @@ wget -qO- http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar xz
 chmod +x /app/steamcmd/steamcmd.sh;
 
 # Download Source SDK Base 2013 Dedicated Server
-/app/steamcmd/steamcmd.sh +login anonymous +force_install_dir /app/server/ +app_update 244310 validate +quit;
+/app/steamcmd/steamcmd.sh +force_install_dir +login anonymous /app/server/ +app_update 244310 validate +quit;
 
 mkdir -p /app/server/tf2classic/logs;
 mkdir -p /app/server/ll-tests;
@@ -25,10 +25,11 @@ mkdir -p /app/server/ll-tests;
 chmod +x /app/updater/TF2CDownloaderLinux
 /app/updater/TF2CDownloaderLinux --install /app/server/;
 rm -rf /var/tmp/*;
+rm -rf /app/steamcmd
 
 cp -r ./dist/linux/* /app/server/
 
-rm -rf /app/server/tf2classic//bin/server_srv.so;
+rm -rf /app/server/tf2classic/bin/server_srv.so;
 ln -s /app/server/tf2classic/bin/server.so /app/tf2classic/bin/server_srv.so;
 rm -rf /app/server/bin/libstdc++.so.6;
 
