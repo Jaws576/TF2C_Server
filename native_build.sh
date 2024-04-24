@@ -3,6 +3,7 @@
 apt-get update;
 apt-get install libxcb-xinerama0 -y;
 apt-get install screen -y;
+apt-get install software-properties-common;
 
 add-apt-repository multiverse
 dpkg --add-architecture i386;
