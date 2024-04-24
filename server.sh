@@ -20,7 +20,8 @@ case $1 in
       update)
           screen -S $NAME -X quit
           /app/updater/TF2CDownloaderLinux --update /app/server/
-		  steamcmd +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
+		  cp -r ./dist/linux/ /app/server
+		  /app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
           screen -d -m -S $NAME $DAEMON $PARAMS
           ;;
 esac
