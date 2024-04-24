@@ -7,6 +7,7 @@ apt-get install libxcb-xinerama0 -y;
 dpkg --add-architecture i386;
 apt-get update && apt-get install -y ca-certificates lib32gcc-s1 libtinfo5:i386 libcurl4-gnutls-dev:i386 libstdc++6 libstdc++6:i386 libtcmalloc-minimal4:i386 locales locales-all tmux zlib1g:i386;
 apt-get install libxcb-xinerama0;
+apt-get install lib32gcc1
 apt-get clean;
 echo "LC_ALL=en_US.UTF-8" >> /etc/environment;
 rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
