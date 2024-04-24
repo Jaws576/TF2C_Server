@@ -19,6 +19,7 @@ case $1 in
           ;;
       update)
           screen -S $NAME -X quit
+		  git pull
           /app/updater/TF2CDownloaderLinux --update /app/server/
 		  rm -r /app/server/tf2classic/addons
 		  rm -r /app/server/tf2classic/cfg
