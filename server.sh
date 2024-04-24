@@ -6,6 +6,7 @@ NAME=SRCDS
 
 case $1 in
       start)
+	  	  screen -S $NAME -X quit
           screen -d -m -S $NAME $DAEMON $PARAMS
 		  echo "starting server"
           ;;
