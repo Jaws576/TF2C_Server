@@ -32,7 +32,6 @@ cp -r ./dist/linux/* /app/server/
 
 rm -rf /app/server/tf2classic/bin/server_srv.so;
 ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so;
-rm -rf /app/server/bin/libstdc++.so.6;
 
 
 ln -s /app/server/bin/engine_srv.so /app/server/bin/engine.so;
