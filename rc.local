@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+su - ubuntu -c "~/TF2C_Server/server.sh start" &
+exit 0
