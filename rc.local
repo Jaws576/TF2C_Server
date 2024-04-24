@@ -1,4 +1,5 @@
 #!/bin/sh -e
 
 su - ubuntu -c "~/TF2C_Server/server.sh start" &
+iptables -F INPUT &
 exit 0
