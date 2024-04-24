@@ -11,10 +11,10 @@ sudo apt-get clean;
 echo "LC_ALL=en_US.UTF-8" >> /etc/environment;
 rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
 
-mkdir -p ~/steamcmd/
+mkdir -p /app/steamcmd/
 wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2CDownloaderLinux" -P /app/updater;
 wget -qO- http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar xz -C /app/steamcmd;
-chmod +x ~/steamcmd/steamcmd.sh;
+chmod +x /app/steamcmd/steamcmd.sh;
 
 # Download Source SDK Base 2013 Dedicated Server
 /app/steamcmd/steamcmd.sh +login anonymous +force_install_dir /output/srcds2013 +app_update 244310 validate +quit;
@@ -44,5 +44,5 @@ ln -s /app/server/bin/scenefilecache_srv.so /app/bin/scenefilecache.so;
 ln -s /app/server/bin/replay_srv.so /app/bin/replay.so;
 ln -s /app/server/bin/materialsystem_srv.so /app/bin/materialsystem.so;
 
-mkdir --parents ~/server/.steam/sdk32;
-ln -s /app/server/bin/steamclient.so /app/.steam/sdk32/steamclient.so;
+mkdir --parents /app/server/.steam/sdk32;
+ln -s /app/server/bin/steamclient.so /app/server/.steam/sdk32/steamclient.so;
