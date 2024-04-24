@@ -11,7 +11,7 @@ apt-get clean;
 echo "LC_ALL=en_US.UTF-8" >> /etc/environment;
 rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
 
-
+mkdir -p ~/steamcmd/
 wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2CDownloaderLinux" -P ~/updater;
 wget -qO- http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar xz -C ~/steamcmd;
 chmod +x ~/steamcmd/steamcmd.sh;
@@ -24,7 +24,7 @@ mkdir -p ~/server/ll-tests;
 
 cp -r ./dist/linux/* ~/server/
 
-chmod +x /app/updater/TF2CDownloaderLinux
+chmod +x ~/server/updater/TF2CDownloaderLinux
 ~/updater/TF2CDownloaderLinux --install ~/server/;
 rm -rf /var/tmp/*;
 
