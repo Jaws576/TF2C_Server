@@ -7,18 +7,16 @@ apt-get install screen -y;
 add-apt-repository multiverse
 dpkg --add-architecture i386;
 apt-get update;
-apt-get install -y ca-certificates lib32z1 libncurses5:i386 libbz2-1.0:i386 lib32gcc-s1 lib32stdc++6 libtinfo5:i386 libcurl3-gnutls:i386 libsdl2-2.0-0:i386 libcurl4-gnutls-dev libcurl4-gnutls-dev:i386
+apt-get install -y ca-certificates steamcmd lib32z1 libncurses5:i386 libbz2-1.0:i386 lib32gcc-s1 lib32stdc++6 libtinfo5:i386 libcurl3-gnutls:i386 libsdl2-2.0-0:i386 libcurl4-gnutls-dev libcurl4-gnutls-dev:i386
 apt-get clean;
 echo "LC_ALL=en_US.UTF-8" >> /etc/environment;
 rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*;
 
-mkdir -p /app/steamcmd/
 wget "https://github.com/tf2classic/TF2CDownloader/releases/latest/download/TF2CDownloaderLinux" -P /app/updater;
 wget -qO- http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar xz -C /app/steamcmd;
-chmod +x /app/steamcmd/steamcmd.sh;
 
 # Download Source SDK Base 2013 Dedicated Server
-/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit;
+su -c "steamcmd +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit" ubuntu;
 
 mkdir -p /app/server/tf2classic/logs;
 mkdir -p /app/server/ll-tests;
@@ -26,7 +24,7 @@ mkdir -p /app/server/ll-tests;
 chmod +x /app/updater/TF2CDownloaderLinux
 /app/updater/TF2CDownloaderLinux --install /app/server/;
 rm -rf /var/tmp/*;
-rm -rf /app/steamcmd
+apt-get purge steamcmd
 
 cp -r ./dist/linux/* /app/server/
 
