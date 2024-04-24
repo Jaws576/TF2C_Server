@@ -23,6 +23,7 @@ case $1 in
 		  rm -r /app/server/tf2classic/addons
 		  rm -r /app/server/tf2classic/cfg
 		  /bin/cp -rf ./dist/linux/ /app/server
+		  cat /home/ubuntu/localserver.cfg >> /app/server/tf2classic/cfg/server.cfg
 		  /app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
           screen -d -m -S $NAME $DAEMON $PARAMS
           ;;
