@@ -31,20 +31,21 @@ rm -rf /app/steamcmd
 cp -r ./dist/linux/* /app/server/
 
 rm -rf /app/server/tf2classic/bin/server_srv.so;
-ln -s /app/server/tf2classic/bin/server.so /app/tf2classic/bin/server_srv.so;
+ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so;
 rm -rf /app/server/bin/libstdc++.so.6;
 
 
-ln -s /app/server/bin/engine_srv.so /app/bin/engine.so;
-ln -s /app/server/bin/datacache_srv.so /app/bin/datacache.so;
-ln -s /app/server/bin/dedicated_srv.so /app/bin/dedicated.so;
-ln -s /app/server/bin/vphysics_srv.so /app/bin/vphysics.so;
-ln -s /app/server/bin/studiorender_srv.so /app/bin/studiorender.so;
-ln -s /app/server/bin/soundemittersystem_srv.so /app/bin/soundemittersystem.so;
-ln -s /app/server/bin/shaderapiempty_srv.so /app/bin/shaderapiempty.so;
-ln -s /app/server/bin/scenefilecache_srv.so /app/bin/scenefilecache.so;
-ln -s /app/server/bin/replay_srv.so /app/bin/replay.so;
-ln -s /app/server/bin/materialsystem_srv.so /app/bin/materialsystem.so;
+ln -s /app/server/bin/engine_srv.so /app/server/bin/engine.so;
+ln -s /app/server/bin/datacache_srv.so /app/server/bin/datacache.so;
+ln -s /app/server/bin/dedicated_srv.so /app/server/bin/dedicated.so;
+ln -s /app/server/bin/vphysics_srv.so /app/server/bin/vphysics.so;
+ln -s /app/server/bin/studiorender_srv.so /app/server/bin/studiorender.so;
+ln -s /app/server/bin/soundemittersystem_srv.so /app/server/bin/soundemittersystem.so;
+ln -s /app/server/bin/shaderapiempty_srv.so /app/server/bin/shaderapiempty.so;
+ln -s /app/server/bin/scenefilecache_srv.so /app/server/bin/scenefilecache.so;
+ln -s /app/server/bin/replay_srv.so /app/server/bin/replay.so;
+ln -s /app/server/bin/materialsystem_srv.so /app/server/bin/materialsystem.so;
 
-mkdir --parents /app/server/.steam/sdk32;
-ln -s /app/server/bin/steamclient.so /app/server/.steam/sdk32/steamclient.so;
+mkdir --parents /home/ubuntu/.steam/sdk32;
+ln -s /app/server/bin/steamclient.so /home/ubuntu/.steam/sdk32/steamclient.so;
+chown -R ubuntu /app/
