@@ -1,7 +1,7 @@
 
 # Install dependencies for TF2CDownloaderLinux
 apt-get update;
-apt-get install libxcb-xinerama0 software-properties-common screen -y;
+apt-get install libxcb-xinerama0 software-properties-common screen cron -y;
 
 add-apt-repository multiverse
 dpkg --add-architecture i386;
