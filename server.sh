@@ -1,6 +1,6 @@
 DIR=/app/server
 DAEMON=$DIR/srcds_run
-PARAMS="-game tf2classic -maxplayers 24 +map pl_badwater"
+PARAMS="-game tf2classic -maxplayers 24 +randommap"
 NAME=SRCDS
 
 
