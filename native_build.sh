@@ -1,9 +1,10 @@
 
+NEEDRESTART_MODE=a
 # Install dependencies for TF2CDownloaderLinux
 apt-get update;
-apt-get install libxcb-xinerama0 software-properties-common screen -y;
+apt-get install libxcb-xinerama0 software-properties-common screen cron -y;
 
-add-apt-repository multiverse
+add-apt-repository multiverse -y
 dpkg --add-architecture i386;
 apt-get update;
 apt-get install -y ca-certificates lib32z1 libncurses5:i386 libbz2-1.0:i386 lib32gcc-s1 lib32stdc++6 libtinfo5:i386 libcurl3-gnutls:i386 libsdl2-2.0-0:i386 libcurl4-gnutls-dev libcurl4-gnutls-dev:i386
@@ -30,6 +31,7 @@ chmod +x /app/updater/TF2CDownloaderLinux
 rm -rf /var/tmp/*;
 
 cp -r ./dist/linux/* /app/server/
+cat /home/ubuntu/localserver.cfg >> /app/server/tf2classic/cfg/server.cfg
 
 rm -rf /app/server/tf2classic/bin/server_srv.so;
 ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so;
