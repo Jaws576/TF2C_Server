@@ -22,8 +22,6 @@ case $1 in
           screen -S $NAME -X quit
 		  git -C /home/ubuntu/TF2C_Server pull
           /app/updater/TF2CDownloaderLinux --update /app/server/
-		  rm -r /app/server/tf2classic/addons
-		  rm -r /app/server/tf2classic/cfg
 		  /bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
 		  cat /home/ubuntu/localserver.cfg >> /app/server/tf2classic/cfg/server.cfg
 		  /app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
