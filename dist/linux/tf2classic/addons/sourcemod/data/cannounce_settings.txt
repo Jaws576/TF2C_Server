@@ -7,7 +7,7 @@
         }
         "messages_admin"
         {
-                "playerjoin"            "{PLAYERTYPE} {RED}{PLAYERNAME} {DEFAULT}> connected from country {GREEN}{PLAYERCOUNTRY} {DEFAULT}({LIGHTGREEN}{PLAYERCOUNTRYSHORT}{DEFAULT})"
-                "playerdisc"            "{PLAYERTYPE} {RED}{PLAYERNAME} {DEFAULT}> from country {GREEN}{PLAYERCOUNTRY} {DEFAULT}({LIGHTGREEN}{PLAYERCOUNTRYSHORT}{DEFAULT}) disconnected {GREEN}reason: {DEFAULT}{DISC_REASON}"
+                "playerjoin"            "{PLAYERTYPE} {GREEN}{PLAYERNAME} {DEFAULT}<{LIGHTGREEN}{STEAMID}{DEFAULT}> connected from country {GREEN}{PLAYERCOUNTRY} {DEFAULT}({LIGHTGREEN}{PLAYERCOUNTRYSHORT}{DEFAULT})"
+                "playerdisc"            "{PLAYERTYPE} {GREEN}{PLAYERNAME} {DEFAULT}<{LIGHTGREEN}{STEAMID}{DEFAULT}> from country {GREEN}{PLAYERCOUNTRY} {DEFAULT}({LIGHTGREEN}{PLAYERCOUNTRYSHORT}{DEFAULT}) disconnected {GREEN}reason: {DEFAULT}{DISC_REASON}"
         }
 }
