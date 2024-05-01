@@ -1,0 +1,54 @@
+"items_game"
+{
+	"items"
+	{
+        "54"
+		{
+			"tags"
+			{
+				"bots_cant_use"				"1"
+			}
+			"name"						"The Gunboats"
+			"prefab"					"valve"
+			"show_in_armory"			"1"
+			"item_class"				"tf_wearable"
+			"item_name"					"#TF_Unique_Blast_Boots"
+			"item_description"			"#TF_Weapon_Gunboats_Desc_Demoman"
+			"item_type_name"			"#TF_Wearable_Boots"
+			"item_slot"					"primary"
+			"equip_region"				"feet"
+			"anim_slot"					"FORCE_NOT_USED"
+			"item_quality"				"normal"
+			"propername"				"1"
+			"image_inventory"			"backpack/weapons/c_models/c_rocketboots_soldier"
+			"model_player"				"models/weapons/c_models/c_rocketboots_demo.mdl"
+			"used_by_classes"
+			{
+				"demoman"				"1"
+			}
+			"loadondemand"				"1"
+			"act_as_wearable"			"1"
+			"attributes"
+			{
+				"rocket jump damage reduction"
+				{
+					"attribute_class"	"rocket_jump_dmg_reduction"
+					"value"				"0.4"
+				}
+				"allowed in medieval mode"
+				{
+					"attribute_class"	"allowed_in_medieval_mode"
+					"value"				"1"
+				}
+				"armor footsteps"
+				{
+					"attribute_class"	"mod_armor_footsteps"
+					"value"				"1"
+				}
+			}
+			"mouse_pressed_sound"		"#ui/item_metal_weapon_pickup.wav"
+			"drop_sound"				"#ui/item_metal_weapon_drop.wav"
+		}
+	}
+
+}
