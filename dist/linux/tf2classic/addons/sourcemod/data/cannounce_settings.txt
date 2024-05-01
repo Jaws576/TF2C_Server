@@ -2,8 +2,8 @@
 {
         "messages"
         {
-                "playerjoin"            "{PLAYERTYPE} {GREEN}{PLAYERNAME} {DEFAULT}> connected from country {GREEN}{PLAYERCOUNTRY} {DEFAULT}({LIGHTGREEN}{PLAYERCOUNTRYSHORT}{DEFAULT})"
-                "playerdisc"            "{PLAYERTYPE} {GREEN}{PLAYERNAME} {DEFAULT}> from country {GREEN}{PLAYERCOUNTRY} {DEFAULT}({LIGHTGREEN}{PLAYERCOUNTRYSHORT}{DEFAULT}) disconnected {GREEN}reason: {DEFAULT}{DISC_REASON}"
+                "playerjoin"            "{PLAYERTYPE} {GREEN}{PLAYERNAME} {DEFAULT}connected from {GREEN}{PLAYERCOUNTRY} {DEFAULT}({LIGHTGREEN}{PLAYERCOUNTRYSHORT}{DEFAULT})"
+                "playerdisc"            "{PLAYERTYPE} {GREEN}{PLAYERNAME}{DEFAULT}({LIGHTGREEN}{PLAYERCOUNTRYSHORT}{DEFAULT}) {DEFAULT}disconnected {GREEN}reason: {DEFAULT}{DISC_REASON}"
         }
         "messages_admin"
         {
