@@ -33,7 +33,7 @@ case $1 in
           screen -d -m -S $NAME $DAEMON $PARAMS
           ;;  
       command)
-          screen -S $NAME -p 0 -X stuff $2'^M'
+          screen -S $NAME -p 0 -X stuff "$2^M"
 esac
 
 exit 0
