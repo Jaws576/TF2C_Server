@@ -49,7 +49,11 @@ ln -s /app/server/bin/replay_srv.so /app/server/bin/replay.so;
 ln -s /app/server/bin/materialsystem_srv.so /app/server/bin/materialsystem.so;
 
 mkdir --parents /home/ubuntu/.steam/sdk32;
+mkdir --parents /home/ubuntu/overrides/tf2classic/addons/sourcemod/config/sourcebans
+cp /app/server/tf2classic/addons/sourcemod/config/databases.cfg /home/ubuntu/overrides/tf2classic/addons/sourcemod/config/
+cp /app/server/tf2classic/addons/sourcemod/config/sourcebans/sourcebans.cfg /home/ubuntu/overrides/tf2classic/addons/sourcemod/config/sourcebans/
 ln -s /app/server/bin/steamclient.so /home/ubuntu/.steam/sdk32/steamclient.so;
 
 cp ./rc.local /etc/
 chown -R ubuntu /app/
+chown -R ubuntu /home/ubuntu/
