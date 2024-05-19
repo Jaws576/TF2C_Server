@@ -25,7 +25,7 @@ case $1 in
           git -C /home/ubuntu/TF2C_Server pull
           /app/updater/TF2CDownloaderLinux --update /app/server/
           rm -r /app/server/tf2classic/addons
-          rm -r /app/server/tf2classic/cfg  
+          rm -r /app/server/tf2classic/cfg/sourcemod
           /bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
           /bin/cp -rf /home/ubuntu/overrides/* /app/server
           cat /home/ubuntu/localserver.cfg >> /app/server/tf2classic/cfg/server.cfg
