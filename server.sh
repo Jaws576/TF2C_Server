@@ -1,6 +1,6 @@
 DIR=/app/server
 DAEMON=$DIR/srcds_run
-PARAMS="-game tf2classic -maxplayers 24 +map koth_viaduct"
+PARAMS="-game tf2classic -maxplayers 20 +map koth_viaduct"
 NAME=SRCDS
 
 
