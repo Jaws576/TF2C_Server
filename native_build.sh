@@ -20,7 +20,8 @@ wget -qO- http://media.steampowered.com/installer/steamcmd_linux.tar.gz | tar xz
 chown -R ubuntu /app/
 chmod +x /app/steamcmd/steamcmd.sh
 
-$HOME = /app
+HOME = /app
+echo $HOME
 
 # Download Source SDK Base 2013 Dedicated Server
 /app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
