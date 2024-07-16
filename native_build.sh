@@ -1,4 +1,6 @@
+#!/bin/bash
 
+cd "$(dirname "$0")"
 NEEDRESTART_MODE=a
 # Install dependencies for TF2CDownloaderLinux
 apt-get update;
@@ -21,7 +23,7 @@ chown -R ubuntu /app/
 chmod +x /app/steamcmd/steamcmd.sh
 
 # Download Source SDK Base 2013 Dedicated Server
-su ubuntu -c /app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
+su ubuntu -c "/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit"
 
 mkdir -p /app/server/tf2classic/logs;
 mkdir -p /app/server/ll-tests;
@@ -31,7 +33,6 @@ chmod +x /app/updater/TF2CDownloaderLinux
 rm -rf /var/tmp/*;
 
 cp -r ./dist/linux/* /app/server/
-cat /home/ubuntu/localserver.cfg >> /app/server/tf2classic/cfg/server.cfg
 
 rm -rf /app/server/tf2classic/bin/server_srv.so;
 ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so;
@@ -49,9 +50,27 @@ ln -s /app/server/bin/replay_srv.so /app/server/bin/replay.so;
 ln -s /app/server/bin/materialsystem_srv.so /app/server/bin/materialsystem.so;
 
 mkdir --parents /home/ubuntu/.steam/sdk32;
-mkdir --parents /home/ubuntu/overrides/tf2classic/addons/sourcemod/config/sourcebans
-cp /app/server/tf2classic/addons/sourcemod/config/databases.cfg /home/ubuntu/overrides/tf2classic/addons/sourcemod/config/
-cp /app/server/tf2classic/addons/sourcemod/config/sourcebans/sourcebans.cfg /home/ubuntu/overrides/tf2classic/addons/sourcemod/config/sourcebans/
+
+if [$1 = ""];
+then
+        max="1"
+else
+        max=$1
+fi
+for i in $(seq $max)
+do
+        name="server"$i
+        echo $name
+        mkdir --parents /home/ubuntu/overrides/$name/tf2classic/addons
+        mkdir --parents /home/ubuntu/overrides/$name/tf2classic/cfg
+        mkdir --parents /app/$name/tf2classic
+        cp /app/server/srcds_run /app/$name/
+        cp -r /app/server/tf2classic/cfg /app/$name/tf2classic/
+        cp -r /app/server/tf2classic/addons /app/$name/tf2classic/
+        ln -s /app/server/tf2classic/* /app/$name/tf2classic/
+        ln -s /app/server/* /app/$name/
+done
+
 ln -s /app/server/bin/steamclient.so /home/ubuntu/.steam/sdk32/steamclient.so;
 
 cp ./rc.local /etc/
