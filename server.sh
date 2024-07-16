@@ -39,12 +39,13 @@ case $1 in
           	/app/updater/TF2CDownloaderLinux --install /app/server/
           	/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
           	/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
-		for path in /app/$pattern;
+		for path in /app/server?*;
 		do
 			name=$(basename $path)
 			rm -r $path/*
-			cp -r /app/server/tf2classic/addons $path/tf2classic/
-			cp -r /app/server/tf2classic/cfg $path/tf2classic/
+			mkdir $path/tf2classic/
+			cp -r /app/server/tf2classic/addons/ $path/tf2classic
+			cp -r /app/server/tf2classic/cfg/ $path/tf2classic
 			/bin/cp -rf /home/ubuntu/overrides/$name/* $path
 			ln -s /app/server/tf2classic/* $path/tf2classic
 			ln -s /app/server/* $path
