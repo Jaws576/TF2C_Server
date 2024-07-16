@@ -25,12 +25,10 @@ chmod +x /app/steamcmd/steamcmd.sh
 # Download Source SDK Base 2013 Dedicated Server
 su ubuntu -c "/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit"
 
-mkdir -p /app/server/tf2classic/logs;
 mkdir -p /app/server/ll-tests;
 
 chmod +x /app/updater/TF2CDownloaderLinux
 /app/updater/TF2CDownloaderLinux --install /app/server/;
-rm -rf /var/tmp/*;
 
 cp -r ./dist/linux/* /app/server/
 
