@@ -30,6 +30,8 @@ mkdir -p /app/server/ll-tests;
 chmod +x /app/updater/TF2CDownloaderLinux
 /app/updater/TF2CDownloaderLinux --install /app/server/;
 
+chown ubuntu /var/tmp/*
+
 cp -r ./dist/linux/* /app/server/
 
 rm -rf /app/server/tf2classic/bin/server_srv.so;
