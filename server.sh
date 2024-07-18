@@ -52,8 +52,12 @@ case $1 in
 		done
 		./$0 start $2
 		;;
-      command)
-          screen -S $NAME -p 0 -X stuff "$2^M"
+	command)
+	  	for path in /app/server?*;
+		do
+  		name=$(basename $path)
+    		screen -S $name -p 0 -X stuff "$2^M"
+	  	done
 esac
 
 exit 0
