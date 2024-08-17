@@ -47,6 +47,7 @@ case $1 in
 			cp -r /app/server/tf2classic/addons/ $path/tf2classic
 			cp -r /app/server/tf2classic/cfg/ $path/tf2classic
 			/bin/cp -rf /home/ubuntu/overrides/$name/* $path
+   			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
 			ln -s /app/server/tf2classic/* $path/tf2classic
 			ln -s /app/server/* $path
 		done
