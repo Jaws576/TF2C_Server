@@ -36,6 +36,7 @@ case $1 in
           	./$0 stop $2
           	sleep 3
           	git -C /home/ubuntu/TF2C_Server pull
+          	rm -r /app/server/tf2classic
           	/app/updater/TF2CDownloaderLinux --install /app/server/
           	/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
           	/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
