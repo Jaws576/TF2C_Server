@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -139,7 +139,7 @@ public void OnPluginStart() {
 	PluginStartScoringSystem();
 	PluginStartBuddySystem();
 	PluginStartAutoScrambleSystem();
-	
+
 	// ConVars
 	s_ConVar_ScrambleVoteEnabled = FindConVar("sv_vote_issue_scramble_teams_allowed");
 	s_ConVar_ScrambleVoteEnabled.AddChangeHook(conVarChanged_ScrambleVoteEnabled);
@@ -148,7 +148,7 @@ public void OnPluginStart() {
 	s_ConVar_TeamsUnbalanceLimit = FindConVar("mp_teams_unbalance_limit");
 	s_ConVar_TeamsUnbalanceLimit.AddChangeHook(conVarChanged_TeamsUnbalanceLimit);
 	g_TeamsUnbalanceLimit = s_ConVar_TeamsUnbalanceLimit.IntValue;
-	
+
 	s_ConVar_ScrambleMethod = CreateConVar(
 		"ss_scramble_method", "1",
 		"The method used to assign teams to players during a scramble.\n\t0 - Shuffle\n\t1 - Top to Weakest Team",
@@ -158,7 +158,7 @@ public void OnPluginStart() {
 	);
 	s_ConVar_ScrambleMethod.AddChangeHook(conVarChanged_ScrambleMethod);
 	g_ScrambleMethod = view_as<ScrambleMethod>(s_ConVar_ScrambleMethod.IntValue);
-	
+
 	s_ConVar_SpecTimeout = CreateConVar(
 		"ss_scramble_spec_timeout", "30",
 		"Players who have been spectating for longer than this many seconds will not participate in scrambles. Use a negative value to have spectators always participate.",
@@ -167,7 +167,7 @@ public void OnPluginStart() {
 	);
 	s_ConVar_SpecTimeout.AddChangeHook(conVarChanged_SpecTimeout);
 	g_SpecTimeout = s_ConVar_SpecTimeout.FloatValue;
-	
+
 	s_ConVar_ScrambleVoteRatio = CreateConVar(
 		"ss_scramble_vote_ratio", "0.6",
 		"The ratio of human players that must vote to scramble the teams for the vote to pass.",
@@ -251,9 +251,9 @@ public void OnPluginStart() {
 		s_ConVar_MessageFailureColorCode.GetString(buf, sizeof(buf));
 		g_MessageFailureColorCode = HexToInt(buf, sizeof(buf));
 	}
-	
+
 	AutoExecConfig(true, "simplescramble");
-	
+
 	// Commands
 	AddCommandListener(cmd_CallVote, "callvote");
 	AddCommandListener(cmd_MpScrambleTeams, "mp_scrambleteams");
@@ -261,14 +261,14 @@ public void OnPluginStart() {
 	RegAdminCmd("sm_scrambleround", cmd_ScrambleRound, ADMFLAG_GENERIC | ADMFLAG_KICK, "Queues a scramble at the end of the round.");
 	RegConsoleCmd("sm_teamstats", cmd_TeamStats, "Prints team stats information.");
 	RegConsoleCmd("sm_votescramble", cmd_VoteScramble, "Vote to scramble the teams.");
-	
-	
+
+
 	// Events
 	HookEvent("player_team", event_PlayerTeam_Pre, EventHookMode_Pre);
 	HookEvent("player_death", event_PlayerDeath_Post, EventHookMode_Post);
 	HookEvent("teamplay_round_start", event_RoundStart_Post, EventHookMode_Post);
 	HookEvent("teamplay_round_win", event_RoundWin_Post, EventHookMode_Post);
-	
+
 	for (int i = 1; i <= MaxClients; ++i) {
 		if (IsClientConnected(i)) {
 			if (!IsFakeClient(i)) {
@@ -287,7 +287,7 @@ public void OnMapStart() {
 	if (g_Hook_GameRules_ShouldScramble.HookGamerules(Hook_Pre, hook_GameRules_ShouldScramble) == INVALID_HOOK_ID) {
 		LogError("Failed to hook gamerules using \"g_Hook_GameRules_ShouldScramble\"");
 	}
-	
+
 	PrecacheScriptSound("Announcer.AM_TeamScrambleRandom");
 
 	AutoScrambleGameStart();
@@ -422,7 +422,7 @@ static Action cmd_Scramble(int client, int args) {
 			PerformScramble(respawnMode);
 		}
 	}
-	
+
 	return Plugin_Handled;
 }
 
@@ -461,11 +461,11 @@ static Action event_PlayerTeam_Pre(Event event, const char[] name, bool dontBroa
 	if (team != oldTeam) {
 		g_ClientTeamTime[client] = GetGameTime();
 	}
-	
+
 	if (g_SuppressTeamSwitchMessage) {
 		event.SetBool("silent", true);
 	}
-	
+
 	return Plugin_Continue;
 }
 
@@ -701,7 +701,7 @@ bool ShouldScrambleClient(int client) {
 	int team = GetClientTeam(client);
 	if (team == TEAM_UNASSIGNED) {
 		// Never try to scramble unassigned clients
-		return false; 
+		return false;
 	} else if (team == TEAM_SPECTATOR) {
 		if (IsFakeClient(client)) {
 			// Spectating bots are not to be scrambled.
@@ -745,7 +745,7 @@ bool MoveClientTeam(int client, int team, RespawnMode respawnMode) {
 			GetTeamName(team, teamName, sizeof(teamName));
 			DebugLog("Moving %N to team %s", client, teamName);
 		}
-		
+
 		// Client who have recently joined will sometimes have no class.
 		if (TF2_GetPlayerClass(client) == TFClass_Unknown) {
 			TFClassType randomClass = view_as<TFClassType>(GetRandomInt(1, 9));
@@ -883,12 +883,12 @@ void PerformScramble(RespawnMode respawnMode, bool notify = true) {
 	if (g_DebugLog) {
 		DebugLog("Performing scramble - respawnMode=%d", respawnMode);
 	}
-	
+
 	EmitGameSoundToAll("Announcer.AM_TeamScrambleRandom");
 
 	// Reset auto scramble conditions.
 	AutoScrambleReset();
-	
+
 	// We scrambled now, so don't bother scrambling next round.
 	g_RoundScrambleQueued = false;
 	ResetScrambleVotes();
@@ -897,23 +897,23 @@ void PerformScramble(RespawnMode respawnMode, bool notify = true) {
 		g_ScrambleVotePassed = false;
 		g_ScrambleVoteScrambleTime = GetGameTime();
 	}
-	
+
 	int clients[MAXPLAYERS];
 	int clientCount = 0;
-	
+
 	// Gather up the clients that we will be scrambling.
 	for (int i = 1; i <= MaxClients; ++i) {
 		if (IsClientInGame(i) && ShouldScrambleClient(i)) {
 			clients[clientCount++] = i;
 		}
 	}
-	
+
 	// Build the client teams.
 	int clientTeams[MAXPLAYERS];
 	{
 		int teamCount = GetPlayTeamCount();
 		int unbalanceLimit = g_TeamsUnbalanceLimit > 0 ? g_TeamsUnbalanceLimit : INT_MAX;
-		
+
 		Profiler prof = new Profiler();
 		prof.Start();
 		BuildScrambleTeams(g_ScrambleMethod, clients, clientTeams, clientCount, teamCount, unbalanceLimit);
@@ -937,13 +937,13 @@ void PerformScramble(RespawnMode respawnMode, bool notify = true) {
 	if (notify) {
 		notifyScramble();
 	}
-	
+
 	// Display scramble statistics.
 	float movedRatio = clientCount > 0 ? float(movedCount) / clientCount : 1.0;
 	char movedPercentStr[12];
 	FormatRoundedFloat(movedPercentStr, sizeof(movedPercentStr), movedRatio * 100, 2);
 	Format(movedPercentStr, sizeof(movedPercentStr), "%s%%", movedPercentStr);
-	
+
 	SS_PrintToChatAll(0, "\x07%06X%t", g_MessageNotificationColorCode, "ScrambleResult", movedCount, clientCount, movedPercentStr);
 	PrintTeamStatsToAll();
 }
