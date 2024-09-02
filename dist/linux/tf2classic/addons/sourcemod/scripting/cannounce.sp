@@ -275,7 +275,11 @@ PrintFormattedMessageToAll( String:rawmsg[301], client )
 {
 	decl String:message[301];
 
+	PrintToServer(message);
+
 	GetFormattedMessage( rawmsg, client, message, sizeof(message) );
+
+	PrintToServer(message);
 
 	CPrintToChatAll( "%s", message );
 }

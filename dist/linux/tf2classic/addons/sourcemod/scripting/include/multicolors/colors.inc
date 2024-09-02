@@ -5,13 +5,13 @@
  *                           Version: 2.0.0-MC                            *
  *                                                                        *
  **************************************************************************/
- 
+
 
 #if defined _colors_included
  #endinput
 #endif
 #define _colors_included
- 
+
 #define MAX_MESSAGE_LENGTH 250
 #define MAX_COLORS 18
 
@@ -62,10 +62,11 @@ static ConVar sm_show_activity;
  * @param client	  Client index.
  * @param szMessage   Message (formatting rules).
  * @return			  No return
- * 
+ *
  * On error/Errors:   If the client is not connected an error will be thrown.
  */
 stock void C_PrintToChat(int client, const char[] szMessage, any ...) {
+	PrintToServer("printtochat");
 	if (client <= 0 || client > MaxClients) {
 		ThrowError("Invalid client index %d", client);
 	}
@@ -101,7 +102,7 @@ stock void C_PrintToChat(int client, const char[] szMessage, any ...) {
  * @param szMessage   Formatting rules.
  * @param ...         Variable number of format parameters.
  * @return			  No return
- * 
+ *
  * On error/Errors:   If the client is not connected or invalid.
  */
 stock void C_ReplyToCommand(int client, const char[] szMessage, any ...) {
@@ -132,7 +133,7 @@ stock void C_ReplyToCommand(int client, const char[] szMessage, any ...) {
  * @param szMessage   Formatting rules.
  * @param ...         Variable number of format parameters.
  * @return			  No return
- * 
+ *
  * On error/Errors:   If the client is not connected or invalid.
  */
 stock void C_ReplyToCommandEx(int client, int author, const char[] szMessage, any ...) {
@@ -184,7 +185,7 @@ stock void C_PrintToChatAll(const char[] szMessage, any ...) {
  * @param author	  Author index whose color will be used for teamcolor tag.
  * @param szMessage   Message (formatting rules).
  * @return			  No return
- * 
+ *
  * On error/Errors:   If the client or author are not connected an error will be thrown.
  */
 stock void C_PrintToChatEx(int client, int author, const char[] szMessage, any ...) {
@@ -225,7 +226,7 @@ stock void C_PrintToChatEx(int client, int author, const char[] szMessage, any .
  * @param author	  Author index whos color will be used for teamcolor tag.
  * @param szMessage   Message (formatting rules).
  * @return			  No return
- * 
+ *
  * On error/Errors:   If the author is not connected an error will be thrown.
  */
 stock void C_PrintToChatAllEx(int author, const char[] szMessage, any ...) {
@@ -309,7 +310,7 @@ stock void C_ReplaceColor(C_Colors color, C_Colors newColor) {
  * to those funcions to skip specified client when printing
  * message to all clients. After message is printed client will
  * no more be skipped.
- * 
+ *
  * @param client   Client index
  * @return		   No return
  */
@@ -327,7 +328,7 @@ stock void C_SkipNextClient(int client) {
  * @param szMessage   String.
  * @param maxlength   Maximum length of the string buffer.
  * @return			  Client index that can be used for SayText2 author index
- * 
+ *
  * On error/Errors:   If there is more then one team color is used an error will be thrown.
  */
 stock int C_Format(char[] szMessage, int maxlength, int author = NO_INDEX) {
@@ -429,7 +430,7 @@ stock int C_FindRandomPlayerByTeam(int color_team) {
 
 	int[] players = new int[MaxClients];
 	int count;
-	
+
 	for (int i = 1; i <= MaxClients; ++i) {
 		if (IsClientInGame(i) && GetClientTeam(i) == color_team) {
 			players[count++] = i;
@@ -475,7 +476,7 @@ stock void C_SayText2(int client, int author, const char[] szMessage) {
 }
 
 /**
- * Creates game color profile 
+ * Creates game color profile
  * This function must be edited if you want to add more games support
  *
  * @return			  No return.
@@ -577,12 +578,12 @@ public void  C_Event_MapStart(Event event, const char[] name, bool dontBroadcast
 }
 
 /**
- * Displays usage of an admin command to users depending on the 
- * setting of the sm_show_activity cvar.  
+ * Displays usage of an admin command to users depending on the
+ * setting of the sm_show_activity cvar.
  *
- * This version does not display a message to the originating client 
- * if used from chat triggers or menus.  If manual replies are used 
- * for these cases, then this function will suffice.  Otherwise, 
+ * This version does not display a message to the originating client
+ * if used from chat triggers or menus.  If manual replies are used
+ * for these cases, then this function will suffice.  Otherwise,
  * C_ShowActivity2() is slightly more useful.
  * Supports color tags.
  *
@@ -651,7 +652,7 @@ stock int C_ShowActivity(int client, const char[] format, any ...) {
 			/* Treat this as a normal user. */
 			if ((value & 1) | (value & 2)) {
 				char newsign[MAX_NAME_LENGTH];
-				
+
 				if ((value & 2) || (i == client)) {
 					newsign = name;
 				}
@@ -669,7 +670,7 @@ stock int C_ShowActivity(int client, const char[] format, any ...) {
 			bool is_root = GetAdminFlag(id, Admin_Root, Access_Effective);
 			if ((value & 4) || (value & 8) || ((value & 16) && is_root)) {
 				char newsign[MAX_NAME_LENGTH];
-				
+
 				if ((value & 8) || ((value & 16) && is_root) || (i == client)) {
 					newsign = name;
 				}
@@ -797,7 +798,7 @@ stock int C_ShowActivityEx(int client, const char[] tag, const char[] format, an
 
 /**
  * Displays usage of an admin command to users depending on the setting of the sm_show_activity cvar.
- * All users receive a message in their chat text, except for the originating client, 
+ * All users receive a message in their chat text, except for the originating client,
  * who receives the message based on the current ReplySource.
  * Supports color tags.
  *
@@ -838,8 +839,8 @@ stock int C_ShowActivity2(int client, const char[] tag, const char[] format, any
 		SetGlobalTransTarget(client);
 		VFormat(szBuffer, sizeof(szBuffer), format, 4);
 
-		/* We don't display directly to the console because the chat text 
-		 * simply gets added to the console, so we don't want it to print 
+		/* We don't display directly to the console because the chat text
+		 * simply gets added to the console, so we don't want it to print
 		 * twice.
 		 */
 		C_PrintToChatEx(client, client, "%s%s", szTag, szBuffer);
