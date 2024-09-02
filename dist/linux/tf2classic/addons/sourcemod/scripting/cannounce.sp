@@ -148,10 +148,8 @@ public OnClientAuthorized(client, const String:auth[])
 	{
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
-			if(!OnPostAdminCheck_JoinMsg(auth))
-            {
-                OnPostAdminCheck_CountryShow(client);
-            }
+			OnPostAdminCheck_JoinMsg(auth);
+			OnPostAdminCheck_CountryShow(client);
 		}
     }
 }
@@ -166,10 +164,8 @@ public OnClientPostAdminCheck(client)
 
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
-            if(!OnPostAdminCheck_JoinMsg(auth))
-            {
-                OnPostAdminCheck_CountryShow(client);
-            }
+            OnPostAdminCheck_JoinMsg(auth);
+            OnPostAdminCheck_CountryShow(client);
 		}
 	}
 }

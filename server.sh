@@ -32,6 +32,17 @@ case $1 in
 		sleep 3
 		./$0 start $2
 		;;
+	patch)
+		git -C /home/ubuntu/TF2C_Server pull
+		/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
+		for path in /app/server?*;
+		do
+			name=$(basename $path)
+			cp -r /app/server/tf2classic/addons/ $path/tf2classic
+			cp -r /app/server/tf2classic/cfg/ $path/tf2classic
+			/bin/cp -rf /home/ubuntu/overrides/$name/* $path
+			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
+		;;
 	update)
           	./$0 stop $2
           	sleep 3
