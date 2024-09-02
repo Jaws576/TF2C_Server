@@ -90,6 +90,7 @@ public Plugin:myinfo =
 *****************************************************************/
 public OnPluginStart()
 {
+	PrintToServer("STARTING CANNOUNCE");
 	LoadTranslations("common.phrases");
 	LoadTranslations("cannounce.phrases");
 
