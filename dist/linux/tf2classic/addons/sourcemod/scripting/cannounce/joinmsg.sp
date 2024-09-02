@@ -105,7 +105,7 @@ OnMapStart_JoinMsg()
 	}
 }
 
-bool OnPostAdminCheck_JoinMsg(const String:steamId[])
+OnPostAdminCheck_JoinMsg(const String:steamId[])
 {
 	decl String:soundfile[SOUNDFILE_PATH_LEN];
 
@@ -119,11 +119,13 @@ bool OnPostAdminCheck_JoinMsg(const String:steamId[])
 	KvRewind(hKVCustomJoinMessages);
 	if(KvJumpToKey(hKVCustomJoinMessages, steamId))
 	{
+		PrintToServer("custom message found");
 		//Custom join MESSAGE
 		KvGetString(hKVCustomJoinMessages, "message", message, sizeof(message), "");
 
 		if( strlen(message) > 0)
 		{
+			PrintToServer("printing custom message");
 			//print output
 			Format(message, sizeof(message), "%c%s", 1, message);
 
@@ -152,12 +154,6 @@ bool OnPostAdminCheck_JoinMsg(const String:steamId[])
 			EmitSoundToAll( soundfile );
 		}
 	}
-
-	if (strlen(message) == 0)
-	{
-        return false
-	}
-	return true
 }
 
 OnClientDisconnect_JoinMsg()

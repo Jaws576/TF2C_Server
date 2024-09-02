@@ -169,8 +169,8 @@ public OnClientPostAdminCheck(client)
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
 			PrintToServer("printing messages");
-			OnPostAdminCheck_JoinMsg(auth);
 			OnPostAdminCheck_CountryShow(client);
+			OnPostAdminCheck_JoinMsg(auth);
 		}
 	}
 }
