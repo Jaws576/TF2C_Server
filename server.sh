@@ -33,6 +33,7 @@ case $1 in
 		./$0 start $2
 		;;
 	patch)
+		./$0 stop $2
 		git -C /home/ubuntu/TF2C_Server pull
 		/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
 		for path in /app/server?*;
@@ -43,6 +44,7 @@ case $1 in
 			/bin/cp -rf /home/ubuntu/overrides/$name/* $path
 			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
 		done
+		./$0 start $2
 		;;
 	update)
           	./$0 stop $2

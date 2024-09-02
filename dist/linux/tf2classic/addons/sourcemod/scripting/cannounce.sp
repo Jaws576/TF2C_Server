@@ -144,10 +144,12 @@ public OnMapStart()
 
 public OnClientAuthorized(client, const String:auth[])
 {
+	PrintToServer("on client authorized");
 	if( GetConVarInt(g_CvarConnectDisplayType) == 0 )
 	{
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
+			PrintToServer("printing messages");
 			OnPostAdminCheck_JoinMsg(auth);
 			OnPostAdminCheck_CountryShow(client);
 		}
@@ -156,6 +158,7 @@ public OnClientAuthorized(client, const String:auth[])
 
 public OnClientPostAdminCheck(client)
 {
+	PrintToServer("on client post admin");
 	decl String:auth[32];
 
 	if( GetConVarInt(g_CvarConnectDisplayType) == 1 )
@@ -164,8 +167,9 @@ public OnClientPostAdminCheck(client)
 
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
-            OnPostAdminCheck_JoinMsg(auth);
-            OnPostAdminCheck_CountryShow(client);
+			PrintToServer("printing messages");
+			OnPostAdminCheck_JoinMsg(auth);
+			OnPostAdminCheck_CountryShow(client);
 		}
 	}
 }
@@ -225,6 +229,7 @@ public OnLibraryAdded(const String:name[])
 ****************************************************************/
 public Action:event_PlayerDisconnect(Handle:event, const String:name[], bool:dontBroadcast)
 {
+	PrintToServer("event player disconnect");
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
 
 	if( client && !IsFakeClient(client) && !dontBroadcast )
@@ -280,7 +285,7 @@ PrintFormattedMessageToAdmins( String:rawmsg[301], client )
 
 	GetFormattedMessage( rawmsg, client, message, sizeof(message) );
 
-	for (new i = 1; i <= GetMaxClients(); i++)
+	for (new i = 1; i <= MaxClients; i++)
 	{
 		if( IsClientInGame(i) && CheckCommandAccess( i, "", ADMFLAG_GENERIC, true ) )
 		{
@@ -295,7 +300,7 @@ PrintFormattedMsgToNonAdmins( String:rawmsg[301], client )
 
 	GetFormattedMessage( rawmsg, client, message, sizeof(message) );
 
-	for (new i = 1; i <= GetMaxClients(); i++)
+	for (new i = 1; i <= MaxClients; i++)
 	{
 		if( IsClientInGame(i) && !CheckCommandAccess( i, "", ADMFLAG_GENERIC, true ) )
 		{
