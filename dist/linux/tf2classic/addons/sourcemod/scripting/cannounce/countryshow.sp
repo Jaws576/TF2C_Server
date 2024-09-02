@@ -65,13 +65,11 @@ OnPostAdminCheck_CountryShow(client)
 		//if sm_ca_showenhancedadmins - show diff messages to admins
 		if( GetConVarInt(g_CvarShowEnhancedToAdmins) )
 		{
-			PrintToServer("printing countryshow message seperate");
 			PrintFormattedMessageToAdmins( rawadmmsg, client );
 			PrintFormattedMsgToNonAdmins( rawmsg, client );
 		}
 		else
 		{
-			PrintToServer("printing countryshow message all");
 			PrintFormattedMessageToAll( rawmsg, client );
 		}
 	}

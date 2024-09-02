@@ -90,7 +90,6 @@ public Plugin:myinfo =
 *****************************************************************/
 public OnPluginStart()
 {
-	PrintToServer("STARTING CANNOUNCE");
 	LoadTranslations("common.phrases");
 	LoadTranslations("cannounce.phrases");
 
@@ -145,7 +144,6 @@ public OnMapStart()
 
 public OnClientAuthorized(client, const String:auth[])
 {
-	PrintToServer("on client authorized");
 	if( GetConVarInt(g_CvarConnectDisplayType) == 0 )
 	{
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
@@ -159,7 +157,6 @@ public OnClientAuthorized(client, const String:auth[])
 
 public OnClientPostAdminCheck(client)
 {
-	PrintToServer("on client post admin");
 	decl String:auth[32];
 
 	if( GetConVarInt(g_CvarConnectDisplayType) == 1 )
@@ -230,7 +227,6 @@ public OnLibraryAdded(const String:name[])
 ****************************************************************/
 public Action:event_PlayerDisconnect(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	PrintToServer("event player disconnect");
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
 
 	if( client && !IsFakeClient(client) && !dontBroadcast )
@@ -275,11 +271,7 @@ PrintFormattedMessageToAll( String:rawmsg[301], client )
 {
 	decl String:message[301];
 
-	PrintToServer(message);
-
 	GetFormattedMessage( rawmsg, client, message, sizeof(message) );
-
-	PrintToServer(message);
 
 	CPrintToChatAll( "%s", message );
 }

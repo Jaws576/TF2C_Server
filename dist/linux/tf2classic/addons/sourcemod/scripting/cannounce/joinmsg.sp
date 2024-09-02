@@ -123,11 +123,13 @@ OnPostAdminCheck_JoinMsg(const String:steamId[])
 		//Custom join MESSAGE
 		KvGetString(hKVCustomJoinMessages, "message", message, sizeof(message), "");
 
+		PrintToServer(message)
+
 		if( strlen(message) > 0)
 		{
 			PrintToServer("printing custom message");
 			//print output
-			Format(message, sizeof(message), "%c%s", 1, message);
+			Format(output, sizeof(output), "%c%s", 1, message);
 
 			PrintFormattedMessageToAll(output, -1);
 		}
