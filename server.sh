@@ -42,6 +42,7 @@ case $1 in
 			cp -r /app/server/tf2classic/cfg/ $path/tf2classic
 			/bin/cp -rf /home/ubuntu/overrides/$name/* $path
 			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
+		done
 		;;
 	update)
           	./$0 stop $2
