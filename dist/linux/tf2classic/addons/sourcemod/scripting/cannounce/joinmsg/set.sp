@@ -245,6 +245,13 @@ bool:SetJoinMsg( String:steamId[], String:message[] )
 		KvRewind(hKVCustomJoinMessages);
 		KeyValuesToFile(hKVCustomJoinMessages, g_fileset);
 
+		if(databaseConnected)
+		{
+			char query[1024];
+			Format(query, sizeOf(query), "UPDATE CustomJoinMessages SET message='%s' WHERE steamId='%s'", message, steamId)
+			DB.Query(QueryCallback, query)
+		}
+
 		return true;
 	}
 	else

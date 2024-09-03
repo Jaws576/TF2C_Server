@@ -133,13 +133,20 @@ DoAllowJoinMsg( String:steamId[], String:target_name[], client )
 bool:AllowJoinMsg( String:steamId[], String:player_name[] )
 {
 	if(!KvJumpToKey(hKVCustomJoinMessages, steamId))
-	{				
+	{
 		KvJumpToKey(hKVCustomJoinMessages, steamId, true);
 		KvSetString(hKVCustomJoinMessages, "playerwasnamed", player_name );
 
 		KvRewind(hKVCustomJoinMessages);			
 		KeyValuesToFile(hKVCustomJoinMessages, g_fileset);
 		
+		if(databaseConnected)
+		{
+			char query[512];
+			Format(query, sizeOf(query), "INSERT INTO CustomJoinMessages VALUES ('%s', '%s', '') ON DUPLICATE KEY UPDATE playerwasnamed='%s'", steamId, playerName, playerName)
+			DB.Query(QueryCallback, query)
+		}
+
 		return true;		
 	}
 	else

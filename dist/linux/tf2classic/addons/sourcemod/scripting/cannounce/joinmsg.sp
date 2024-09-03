@@ -23,6 +23,10 @@ new Handle:g_CvarMapStartNoSound = INVALID_HANDLE;
 
 new bool:noSoundPeriod = false;
 
+new bool:databaseConnected = false;
+
+new Database:DB = INVALID_HANDLE;
+
 /*****************************************************************
 
 
@@ -46,11 +50,13 @@ new bool:noSoundPeriod = false;
 
 SetupJoinMsg()
 {
+
 	noSoundPeriod = false;
 
 	//cvars
 	g_CvarPlaySound = CreateConVar("sm_ca_playsound", "0", "Plays a specified (sm_ca_playsoundfile) sound on player connect");
 	g_CvarPlaySoundFile = CreateConVar("sm_ca_playsoundfile", "ambient\\alarms\\klaxon1.wav", "Sound to play on player connect if sm_ca_playsound = 1");
+	
 
 	g_CvarPlayDiscSound = CreateConVar("sm_ca_playdiscsound", "0", "Plays a specified (sm_ca_playdiscsoundfile) sound on player discconnect");
 	g_CvarPlayDiscSoundFile = CreateConVar("sm_ca_playdiscsoundfile", "weapons\\cguard\\charging.wav", "Sound to play on player discconnect if sm_ca_playdiscsound = 1");
@@ -66,6 +72,17 @@ SetupJoinMsg()
 		KeyValuesToFile(hKVCustomJoinMessages, g_fileset);
 	}
 
+	if (!SQL_CheckConfig("cannounce"))
+	{
+		LogError("Database failure: Could not find Database conf \"cannounce\".");
+		databaseConnected = false;
+	}
+
+	else
+	{
+		Database.Connect(GotDatabase, "cannounce");	
+	}
+
 	SetupJoinMsg_Allow();
 
 	SetupJoinMsg_DisAllow();
@@ -74,6 +91,7 @@ SetupJoinMsg()
 
 	SetupJoinSound_Set();
 }
+
 
 
 OnAdminMenuReady_JoinMsg()
@@ -105,56 +123,22 @@ OnMapStart_JoinMsg()
 	}
 }
 
-bool:OnPostAdminCheck_JoinMsg(client, const String:steamId[])
+OnPostAdminCheck_JoinMsg(client, const String:steamId[])
 {
-	decl String:soundfile[SOUNDFILE_PATH_LEN];
 
-	new String:message[MSGLENGTH + 1];
-	new String:output[301];
-	new String:soundFilePath[SOUNDFILE_PATH_LEN];
-
-	new bool:customSoundPlayed = false;
-	new bool:customMessageSent = false;
-
-	//get from kv file
-	KvRewind(hKVCustomJoinMessages);
-	if(KvJumpToKey(hKVCustomJoinMessages, steamId))
+	if (databaseConnected)
 	{
-		//Custom join MESSAGE
-		KvGetString(hKVCustomJoinMessages, "message", message, sizeof(message), "");
-
-		if( strlen(message) > 0)
-		{
-			//print output
-			Format(output, sizeof(output), "%c%s", 1, message);
-
-			PrintFormattedMessageToAll(output, client);
-			customMessageSent = true;
-		}
-
-		//Custom join SOUND
-		KvGetString(hKVCustomJoinMessages, "soundfile", soundFilePath, sizeof(soundFilePath), "");
-
-		if( strlen(soundFilePath) > 0 && !noSoundPeriod )
-		{
-			EmitSoundToAll( soundFilePath );
-			customSoundPlayed = true;
-		}
+		DataPack dataPack = new DataPack();
+		dataPack.WriteCell(client);
+		dataPack.WriteCell(steamId);
+		char query[512];
+		Format(query, sizeof(query), "SELECT steamId, playerwasnamed, message FROM CustomJoinMessages WHERE steamId = '%s'", steamId)
+		DB.Query(UpdateKVFromDB, query, dataPack)
 	}
-
-	KvRewind(hKVCustomJoinMessages);
-
-	//if enabled and custom sound not already played, play all player sound
-	if( GetConVarInt(g_CvarPlaySound) && !customSoundPlayed)
+	else
 	{
-		GetConVarString(g_CvarPlaySoundFile, soundfile, sizeof(soundfile));
-
-		if( strlen(soundfile) > 0 && !noSoundPeriod)
-		{
-			EmitSoundToAll( soundfile );
-		}
+		SendJoinmsgKV(client, steamId)
 	}
-	return customMessageSent;
 }
 
 OnClientDisconnect_JoinMsg()
@@ -187,6 +171,87 @@ public Action:Timer_MapStartNoSound(Handle:timer)
 }
 
 
+/******************************************************
+
+ * 			CALLBACKS
+ 
+*************************************************/
+
+public void GotDatabase(Database db, const char[] error, any data)
+{
+	if (db == INVALID_HANDLE)
+	{
+		LogError("Database failure: %s.", error);
+		return;
+	}
+
+	DB = db;
+	databaseConnected = true;
+
+	char query[512];
+
+	Format(query, sizeof(query), "SELECT steamId, playerwasnamed, message FROM CustomJoinMessages");
+	DB.Query(GotJoinmsgList, query)
+}
+
+public void GotJoinmsgList(Database db, DBResultSet results, const char[] error, any data)
+{
+
+	if (results == null)
+	{
+		LogError("Failed to retrieve join message list from the database, %s", error);
+		return;
+	}
+
+	new String:steamId[24];
+	new String:playerwasnamed[MAX_TARGET_LENGTH];
+	new String:message[MSGLENGTH + 2];
+
+	while (results.FetchRow())
+	{
+		results.FetchString(0, steamId, sizeof(steamId));
+		results.FetchString(1, playerwasnamed, sizeof(playerwasnamed));
+		results.FetchString(2, message, sizeof(message));
+
+		KvJumpToKey(hKVCustomJoinMessages, steamId, true);
+		KvSetString(hKVCustomJoinMessages, "playerwasnamed", player_name );
+		KvSetString(hKVCustomJoinMessages, "message", message );
+		KvRewind(hKVCustomJoinMessages);
+	}
+	KeyValuesToFile(hKVCustomJoinMessages, g_fileset);
+}
+
+public void UpdateKVFromDB(Database db, DBResultSet results, const char[] error, DataPack dataPack)
+{
+	if (results != null && results.FetchRow())
+	{
+		new String:steamId[24];
+		new String:playerwasnamed[MAX_TARGET_LENGTH];
+		new String:message[MSGLENGTH + 2];
+
+		results.FetchString(0, steamId, sizeof(steamId));
+		results.FetchString(1, playerwasnamed, sizeof(playerwasnamed));
+		results.FetchString(2, message, sizeof(message));
+
+		KvJumpToKey(hKVCustomJoinMessages, steamId, true);
+		KvSetString(hKVCustomJoinMessages, "playerwasnamed", player_name );
+		KvSetString(hKVCustomJoinMessages, "message", message );
+		KvRewind(hKVCustomJoinMessages);
+	}
+	dataPack.Reset();
+	client = dataPack.ReadCell();
+	steamId = dataPack.ReadCell();
+	SendJoinmsg(client, steamId)
+}
+
+public void QueryCallback(Database db, DBResultSet results, const char[] error, any data)
+{
+	if (results == null)
+	{
+		LogError("Failed to query the database, %s", error);
+		return;
+	}
+}
 /*****************************************************************
 
 
@@ -228,5 +293,59 @@ LoadSoundFilesAll()
 
 			PrecacheSound( dc_soundFile );
 		}
+	}
+}
+
+SendJoinmsg(client, const String:steamId[])
+{
+	decl String:soundfile[SOUNDFILE_PATH_LEN];
+	new bool:customSoundPlayed = false;
+	new bool:customMessageSent = false;
+
+	//get from kv file
+	KvRewind(hKVCustomJoinMessages);
+	if(KvJumpToKey(hKVCustomJoinMessages, steamId))
+	{
+		new String:message[MSGLENGTH + 1];
+		new String:output[301];
+		new String:soundFilePath[SOUNDFILE_PATH_LEN];
+		//Custom join MESSAGE
+		KvGetString(hKVCustomJoinMessages, "message", message, sizeof(message), "");
+
+		if( strlen(message) > 0)
+		{
+			//print output
+			Format(output, sizeof(output), "%c%s", 1, message);
+
+			PrintFormattedMessageToAll(output, client);
+			customMessageSent = true;
+		}
+
+		//Custom join SOUND
+		KvGetString(hKVCustomJoinMessages, "soundfile", soundFilePath, sizeof(soundFilePath), "");
+
+		if( strlen(soundFilePath) > 0 && !noSoundPeriod )
+		{
+			EmitSoundToAll( soundFilePath );
+			customSoundPlayed = true;
+		}
+	}
+
+	KvRewind(hKVCustomJoinMessages);
+
+	//if enabled and custom sound not already played, play all player sound
+	if( GetConVarInt(g_CvarPlaySound) && !customSoundPlayed)
+	{
+		GetConVarString(g_CvarPlaySoundFile, soundfile, sizeof(soundfile));
+
+		if( strlen(soundfile) > 0 && !noSoundPeriod)
+		{
+			EmitSoundToAll( soundfile );
+		}
+	}
+
+	if (!customMessageSent)
+	{
+		ShowDefaultMessage(client);
 	}
 }

@@ -72,9 +72,9 @@ new Handle:g_CvarConnectDisplayType = INVALID_HANDLE;
 *****************************************************************/
 public Plugin:myinfo =
 {
-	name = "Connect Announce",
-	author = "Arg!",
-	description = "Replacement of default player connection message, allows for custom connection messages",
+	name = "Connect Announce Fork",
+	author = "Arg!, Jaws",
+	description = "Replacement of default player connection message, allows for custom connection messages. Forked for connection message formatting and database storage.",
 	version = VERSION,
 	url = "http://forums.alliedmods.net/showthread.php?t=77306"
 };
@@ -148,10 +148,7 @@ public OnClientAuthorized(client, const String:auth[])
 	{
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
-			if (!OnPostAdminCheck_JoinMsg(client, auth))
-			{
-				OnPostAdminCheck_CountryShow(client);
-			}
+			OnPostAdminCheck_JoinMsg(client, auth)
 		}
     }
 }
@@ -166,10 +163,7 @@ public OnClientPostAdminCheck(client)
 
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
-			if (!OnPostAdminCheck_JoinMsg(client, auth))
-			{
-				OnPostAdminCheck_CountryShow(client);
-			}
+			OnPostAdminCheck_JoinMsg(client, auth)
 		}
 	}
 }
@@ -267,6 +261,11 @@ bool:IsLanIP( String:src[16] )
 	}
 
 	return false;
+}
+
+ShowDefaultMessage(client)
+{
+	OnPostAdminCheck_CountryShow(client);
 }
 
 PrintFormattedMessageToAll( String:rawmsg[301], client )
