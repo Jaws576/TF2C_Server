@@ -148,9 +148,10 @@ public OnClientAuthorized(client, const String:auth[])
 	{
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
-			PrintToServer("printing messages");
-			OnPostAdminCheck_JoinMsg(auth);
-			OnPostAdminCheck_CountryShow(client);
+			if (!OnPostAdminCheck_JoinMsg(client, auth))
+			{
+				OnPostAdminCheck_CountryShow(client);
+			}
 		}
     }
 }
@@ -165,9 +166,10 @@ public OnClientPostAdminCheck(client)
 
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
-			PrintToServer("printing messages");
-			OnPostAdminCheck_CountryShow(client);
-			OnPostAdminCheck_JoinMsg(auth);
+			if (!OnPostAdminCheck_JoinMsg(client, auth))
+			{
+				OnPostAdminCheck_CountryShow(client);
+			}
 		}
 	}
 }
@@ -274,6 +276,15 @@ PrintFormattedMessageToAll( String:rawmsg[301], client )
 	GetFormattedMessage( rawmsg, client, message, sizeof(message) );
 
 	CPrintToChatAll( "%s", message );
+}
+
+PrintFormattedMessageToSelf( String:rawmsg[301], client )
+{
+	decl String:message[301];
+
+	GetFormattedMessage( rawmsg, client, message, sizeof(message) );
+
+	CPrintToChat(client, "%s", message );
 }
 
 PrintFormattedMessageToAdmins( String:rawmsg[301], client )
