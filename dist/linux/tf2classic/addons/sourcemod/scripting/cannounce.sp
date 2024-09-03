@@ -148,7 +148,7 @@ public OnClientAuthorized(client, const String:auth[])
 	{
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
-			OnPostAdminCheck_JoinMsg(client, auth)
+			OnPostAdminCheck_JoinMsg(client, auth);
 		}
     }
 }
@@ -163,7 +163,7 @@ public OnClientPostAdminCheck(client)
 
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
-			OnPostAdminCheck_JoinMsg(client, auth)
+			OnPostAdminCheck_JoinMsg(client, auth);
 		}
 	}
 }

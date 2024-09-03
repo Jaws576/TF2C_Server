@@ -25,7 +25,7 @@ new bool:noSoundPeriod = false;
 
 new bool:databaseConnected = false;
 
-new Database:DB = INVALID_HANDLE;
+new Database:DB;
 
 /*****************************************************************
 
@@ -56,7 +56,7 @@ SetupJoinMsg()
 	//cvars
 	g_CvarPlaySound = CreateConVar("sm_ca_playsound", "0", "Plays a specified (sm_ca_playsoundfile) sound on player connect");
 	g_CvarPlaySoundFile = CreateConVar("sm_ca_playsoundfile", "ambient\\alarms\\klaxon1.wav", "Sound to play on player connect if sm_ca_playsound = 1");
-	
+
 
 	g_CvarPlayDiscSound = CreateConVar("sm_ca_playdiscsound", "0", "Plays a specified (sm_ca_playdiscsoundfile) sound on player discconnect");
 	g_CvarPlayDiscSoundFile = CreateConVar("sm_ca_playdiscsoundfile", "weapons\\cguard\\charging.wav", "Sound to play on player discconnect if sm_ca_playdiscsound = 1");
@@ -80,7 +80,7 @@ SetupJoinMsg()
 
 	else
 	{
-		Database.Connect(GotDatabase, "cannounce");	
+		Database.Connect(GotDatabase, "cannounce");
 	}
 
 	SetupJoinMsg_Allow();
@@ -130,14 +130,14 @@ OnPostAdminCheck_JoinMsg(client, const String:steamId[])
 	{
 		DataPack dataPack = new DataPack();
 		dataPack.WriteCell(client);
-		dataPack.WriteCell(steamId);
+		dataPack.WriteString(steamId);
 		char query[512];
-		Format(query, sizeof(query), "SELECT steamId, playerwasnamed, message FROM CustomJoinMessages WHERE steamId = '%s'", steamId)
-		DB.Query(UpdateKVFromDB, query, dataPack)
+		Format(query, sizeof(query), "SELECT steamId, playerwasnamed, message FROM CustomJoinMessages WHERE steamId = '%s'", steamId);
+		DB.Query(UpdateKVFromDB, query, dataPack);
 	}
 	else
 	{
-		SendJoinmsgKV(client, steamId)
+		SendJoinmsg(client, steamId);
 	}
 }
 
@@ -174,7 +174,7 @@ public Action:Timer_MapStartNoSound(Handle:timer)
 /******************************************************
 
  * 			CALLBACKS
- 
+
 *************************************************/
 
 public void GotDatabase(Database db, const char[] error, any data)
@@ -214,7 +214,7 @@ public void GotJoinmsgList(Database db, DBResultSet results, const char[] error,
 		results.FetchString(2, message, sizeof(message));
 
 		KvJumpToKey(hKVCustomJoinMessages, steamId, true);
-		KvSetString(hKVCustomJoinMessages, "playerwasnamed", player_name );
+		KvSetString(hKVCustomJoinMessages, "playerwasnamed", playerwasnamed );
 		KvSetString(hKVCustomJoinMessages, "message", message );
 		KvRewind(hKVCustomJoinMessages);
 	}
@@ -223,9 +223,9 @@ public void GotJoinmsgList(Database db, DBResultSet results, const char[] error,
 
 public void UpdateKVFromDB(Database db, DBResultSet results, const char[] error, DataPack dataPack)
 {
+	new String:steamId[24];
 	if (results != null && results.FetchRow())
 	{
-		new String:steamId[24];
 		new String:playerwasnamed[MAX_TARGET_LENGTH];
 		new String:message[MSGLENGTH + 2];
 
@@ -234,13 +234,13 @@ public void UpdateKVFromDB(Database db, DBResultSet results, const char[] error,
 		results.FetchString(2, message, sizeof(message));
 
 		KvJumpToKey(hKVCustomJoinMessages, steamId, true);
-		KvSetString(hKVCustomJoinMessages, "playerwasnamed", player_name );
+		KvSetString(hKVCustomJoinMessages, "playerwasnamed", playerwasnamed );
 		KvSetString(hKVCustomJoinMessages, "message", message );
 		KvRewind(hKVCustomJoinMessages);
 	}
 	dataPack.Reset();
-	client = dataPack.ReadCell();
-	steamId = dataPack.ReadCell();
+	int client = dataPack.ReadCell();
+	dataPack.ReadString(steamId, 24);
 	SendJoinmsg(client, steamId)
 }
 

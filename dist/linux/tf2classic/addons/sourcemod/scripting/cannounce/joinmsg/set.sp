@@ -248,7 +248,7 @@ bool:SetJoinMsg( String:steamId[], String:message[] )
 		if(databaseConnected)
 		{
 			char query[1024];
-			Format(query, sizeOf(query), "UPDATE CustomJoinMessages SET message='%s' WHERE steamId='%s'", message, steamId)
+			Format(query, sizeof(query), "UPDATE CustomJoinMessages SET message='%s' WHERE steamId='%s'", message, steamId)
 			DB.Query(QueryCallback, query)
 		}
 
