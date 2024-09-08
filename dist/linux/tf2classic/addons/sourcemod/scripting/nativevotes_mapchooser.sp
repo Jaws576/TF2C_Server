@@ -1276,7 +1276,7 @@ CreateNextVote()
 	RemoveStringFromArray(tempMaps, map);
 
 
-	if (GetConVarInt(g_Cvar_ExcludeMaps) && (GetArraySize(tempMaps) > GetConVarInt(g_Cvar_ExcludeMaps)))
+	if ((GetConVarInt(g_Cvar_ExcludeMaps) > 0) && (GetArraySize(tempMaps) > GetArraySize(g_OldMapList)))
 	{
 		PrintToServer("test");
 		for (new i = 0; i < GetArraySize(g_OldMapList); i++)
