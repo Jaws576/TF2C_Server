@@ -1275,17 +1275,22 @@ CreateNextVote()
 	GetCurrentMap(map, sizeof(map));
 	RemoveStringFromArray(tempMaps, map);
 
-
-	if ((GetConVarInt(g_Cvar_ExcludeMaps) > 0) && (GetArraySize(tempMaps) > GetArraySize(g_OldMapList)))
+	if (GetConVarInt(g_Cvar_ExcludeMaps) > 0)
 	{
-		PrintToServer("test");
-		for (new i = 0; i < GetArraySize(g_OldMapList); i++)
+		if (GetArraySize(tempMaps) > GetArraySize(g_OldMapList))
 		{
-			GetArrayString(g_OldMapList, i, map, sizeof(map));
-			PrintToServer(map);
-			RemoveStringFromArray(tempMaps, map);
+			for (new i = 0; i < GetArraySize(g_OldMapList); i++)
+			{
+				GetArrayString(g_OldMapList, i, map, sizeof(map));
+				RemoveStringFromArray(tempMaps, map);
+			}
+		}
+		else
+		{
+			ClearArray(g_OldMapList);
 		}
 	}
+
 
 	new limit = (GetConVarInt(g_Cvar_IncludeMaps) < GetArraySize(tempMaps) ? GetConVarInt(g_Cvar_IncludeMaps) : GetArraySize(tempMaps));
 	for (new i = 0; i < limit; i++)
