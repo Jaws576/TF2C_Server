@@ -121,24 +121,18 @@ OnMapStart_JoinMsg()
 		noSoundPeriod = true;
 		CreateTimer(waitPeriod, Timer_MapStartNoSound);
 	}
+
+	if (databaseConnected)
+	{
+		char query[512];
+		Format(query, sizeof(query), "SELECT steamId, playerwasnamed, message FROM CustomJoinMessages");
+		DB.Query(GotJoinmsgList, query);
+	}
 }
 
 OnPostAdminCheck_JoinMsg(client, const String:steamId[])
 {
-
-	if (databaseConnected)
-	{
-		DataPack dataPack = new DataPack();
-		dataPack.WriteCell(client);
-		dataPack.WriteString(steamId);
-		char query[512];
-		Format(query, sizeof(query), "SELECT steamId, playerwasnamed, message FROM CustomJoinMessages WHERE steamId = '%s'", steamId);
-		DB.Query(UpdateKVFromDB, query, dataPack);
-	}
-	else
-	{
-		SendJoinmsg(client, steamId);
-	}
+	SendJoinmsg(client, steamId);
 }
 
 OnClientDisconnect_JoinMsg()
@@ -191,7 +185,7 @@ public void GotDatabase(Database db, const char[] error, any data)
 	char query[512];
 
 	Format(query, sizeof(query), "SELECT steamId, playerwasnamed, message FROM CustomJoinMessages");
-	DB.Query(GotJoinmsgList, query)
+	DB.Query(GotJoinmsgList, query);
 }
 
 public void GotJoinmsgList(Database db, DBResultSet results, const char[] error, any data)
