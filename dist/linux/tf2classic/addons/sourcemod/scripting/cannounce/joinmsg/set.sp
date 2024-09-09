@@ -251,7 +251,7 @@ bool:SetJoinMsg( String:steamId[], String:message[] )
 			strcopy(newmsg, sizeof(newmsg), message)
 			ReplaceString(newmsg, sizeof(newmsg), "\"", "\\\"")
 			ReplaceString(newmsg, sizeof(newmsg), "\'", "\\\'")
-			ReplaceString(newmsg, sizeof(newmsg), "\\", "\\")
+			ReplaceString(newmsg, sizeof(newmsg), "\\", "\\\\")
 			char query[1024];
 			Format(query, sizeof(query), "UPDATE CustomJoinMessages SET message='%s' WHERE steamId='%s'", newmsg, steamId)
 			DB.Query(QueryCallback, query)
