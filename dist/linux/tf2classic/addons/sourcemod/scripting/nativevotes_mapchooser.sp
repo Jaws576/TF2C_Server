@@ -1277,17 +1277,14 @@ CreateNextVote()
 
 	if (GetConVarInt(g_Cvar_ExcludeMaps) > 0)
 	{
-		if (GetArraySize(tempMaps) > GetArraySize(g_OldMapList))
+		while (!(GetArraySize(tempMaps) > GetArraySize(g_OldMapList)))
 		{
-			for (new i = 0; i < GetArraySize(g_OldMapList); i++)
-			{
-				GetArrayString(g_OldMapList, i, map, sizeof(map));
-				RemoveStringFromArray(tempMaps, map);
-			}
+			RemoveFromArray(g_OldMapList, 0);
 		}
-		else
+		for (new i = 0; i < GetArraySize(g_OldMapList); i++)
 		{
-			ClearArray(g_OldMapList);
+			GetArrayString(g_OldMapList, i, map, sizeof(map));
+			RemoveStringFromArray(tempMaps, map);
 		}
 	}
 

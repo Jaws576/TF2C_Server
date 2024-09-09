@@ -9,7 +9,7 @@
 				"bots_cant_use"				"1"
 			}
 			"name"						"The Gunboats"
-			"prefab"					"remove"
+			"prefab"					"valve"
 			"show_in_armory"			"1"
 			"item_class"				"tf_wearable"
 			"item_name"					"#TF_Unique_Blast_Boots"
