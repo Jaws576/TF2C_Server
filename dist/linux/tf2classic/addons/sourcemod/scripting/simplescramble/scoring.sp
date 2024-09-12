@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -35,13 +35,13 @@ int g_ClientCachedScore[MAXPLAYERS];
 void PluginStartScoringSystem() {
 	g_ConVar_ScoreMethod = CreateConVar(
 		"ss_score_method", "0",
-		"The method used to score players during a scramble.\n\t0 - Use Game Score\n\t1 - Use HLX:CE Skill\n\t2 - Use Game Score per minute",
+		"The method used to score players during a scramble.\n\t0 - Use Game Score\n\t1 - Use HLX:CE Skill\n\t2 - Use Game Score per 10 minutes",
 		_,
 		true, 0.0,
 		true, 2.0
 	);
 	g_ConVar_ScoreMethod.AddChangeHook(conVarChanged_ScoreMethod);
-	
+
 	s_ConVar_ScorePrecisionFactor = CreateConVar(
 		"ss_score_precision_factor", "1",
 		"All scores are rounded to the nearest multiple of this value when evaluated. Smaller numbers result in better balanced teams while larger numbers offer more opportunities for players to be viewed as equal.",
@@ -50,7 +50,7 @@ void PluginStartScoringSystem() {
 	);
 	s_ConVar_ScorePrecisionFactor.AddChangeHook(conVarChanged_ScorePrecisionFactor);
 	g_ScorePrecisionFactor = s_ConVar_ScorePrecisionFactor.IntValue;
-	
+
 	s_ConVar_FallbackScore = CreateConVar(
 		"ss_fallback_score", "0",
 		"The fallback score value given to players when no score data is available."
@@ -82,13 +82,24 @@ int ScoreClient(int client) {
 	return modifiedScore;
 }
 
+float GetClientCurrentPlayTime(int client)
+{
+	int team = GetClientTeam(client)
+	if(!(team==TEAM_SPECTATOR || team==TEAM_UNASSIGNED))
+	{
+		return (g_ClientPlayTime[client] + GetClientTimeOnTeam(client));
+	}
+	return g_ClientPlayTime[client]
+}
+
+
 int ScoreClientUnmodified(int client) {
 	int score;
 	switch (g_ScoreMethod) {
 		case ScoreMethod_GameScore:
 			score = GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iTotalScore", _, client);
 		case ScoreMethod_GameScore_Time:
-			score = RoundToNearest((GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iTotalScore", _, client) * 360) / g_ClientPlayTime[client]);
+			score = RoundToNearest((GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iTotalScore", _, client) * 600) / GetClientCurrentPlayTime(client));
 		default:
 			score = g_ClientCachedScore[client];
 	}
@@ -136,7 +147,7 @@ static void initScoreMethod_HLXCE() {
 		updateScoreCache_HLXCE();
 	} else {
 		LogMessage("hlxce-sm-api is missing - falling back to game score method");
-		InitScoreMethod(ScoreMethod_GameScore);			
+		InitScoreMethod(ScoreMethod_GameScore);
 	}
 }
 

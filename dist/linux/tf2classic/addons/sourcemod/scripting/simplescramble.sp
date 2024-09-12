@@ -28,9 +28,9 @@
 #pragma newdecls required
 
 public Plugin myinfo = {
-	name = "Simple Scramble",
-	author = "Ian",
-	description = "Very simple scramble functionality for TF2 Classic",
+	name = "Simple Scramble Forked",
+	author = "Ian, Jaws",
+	description = "Very simple scramble functionality for TF2 Classic, with extra points/time scoring mode",
 	version = "1.2.3",
 	url = "https://github.com/IanE9/simple-scramble"
 };
@@ -296,10 +296,6 @@ public void OnMapStart() {
 	g_RoundScrambleQueued = false;
 	g_ScrambleVoteScrambleTime = 0.0;
 	g_ScrambleVotePassed = false;
-	for(int client = 0; client <= MaxClients; client++)
-	{
-		g_ClientPlayTime[client] = 0.0;
-	}
 }
 
 static void conVarChanged_ScrambleVoteEnabled(ConVar convar, const char[] oldValue, const char[] newValue) {
@@ -465,9 +461,13 @@ static Action event_PlayerTeam_Pre(Event event, const char[] name, bool dontBroa
 	int oldTeam = event.GetInt("oldteam");
 	if (team != oldTeam) {
 		float gameTime = GetGameTime();
-		if (!(oldTeam == TEAM_UNASSIGNED || oldTeam == TEAM_SPECTATOR))
+		if (oldTeam == TEAM_UNASSIGNED)
 		{
-			g_ClientPlayTime[client] += gameTime - g_ClientTeamTime[client];
+            g_ClientPlayTime[client] = 0.0;
+		}
+		else if (!(oldTeam == TEAM_SPECTATOR))
+		{
+			g_ClientPlayTime[client] += (gameTime - g_ClientTeamTime[client]);
 		}
 		g_ClientTeamTime[client] = gameTime;
 	}
@@ -535,6 +535,7 @@ void InitConnectedClient(int client) {
 
 void InitInGameClient(int client) {
 	g_ClientTeamTime[client] = GetGameTime();
+	g_ClientPlayTime[client] = 0.0;
 	InitClientBuddies(client);
 }
 
