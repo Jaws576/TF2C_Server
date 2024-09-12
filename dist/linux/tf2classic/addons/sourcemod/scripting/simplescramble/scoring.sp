@@ -38,7 +38,6 @@ void PluginStartScoringSystem() {
 		"The method used to score players during a scramble.\n\t0 - Use Game Score\n\t1 - Use HLX:CE Skill\n\t2 - Use Game Score per minute",
 		_,
 		true, 0.0,
-		true, 1.0,
 		true, 2.0
 	);
 	g_ConVar_ScoreMethod.AddChangeHook(conVarChanged_ScoreMethod);
@@ -89,7 +88,7 @@ int ScoreClientUnmodified(int client) {
 		case ScoreMethod_GameScore:
 			score = GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iTotalScore", _, client);
 		case ScoreMethod_GameScore_Time:
-			score = (GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iTotalScore", _, client) * 360) / g_ClientPlayTime[client];
+			score = RoundToNearest((GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iTotalScore", _, client) * 360) / g_ClientPlayTime[client]);
 		default:
 			score = g_ClientCachedScore[client];
 	}
