@@ -93,6 +93,7 @@ int g_MessageSuccessColorCode;
 int g_MessageFailureColorCode;
 
 float g_ClientTeamTime[MAXPLAYERS] = {0.0, ...};
+float g_ClientPlayTime[MAXPLAYERS] = {0.0, ...};
 bool g_ClientScrambleVote[MAXPLAYERS] = {false, ...};
 
 int g_HumanClients = 0;
@@ -295,6 +296,10 @@ public void OnMapStart() {
 	g_RoundScrambleQueued = false;
 	g_ScrambleVoteScrambleTime = 0.0;
 	g_ScrambleVotePassed = false;
+	for(int client = 0; client <= MaxClients; client++)
+	{
+		g_ClientPlayTime[client] = 0.0;
+	}
 }
 
 static void conVarChanged_ScrambleVoteEnabled(ConVar convar, const char[] oldValue, const char[] newValue) {
@@ -459,7 +464,12 @@ static Action event_PlayerTeam_Pre(Event event, const char[] name, bool dontBroa
 	int team = event.GetInt("team");
 	int oldTeam = event.GetInt("oldteam");
 	if (team != oldTeam) {
-		g_ClientTeamTime[client] = GetGameTime();
+		float gameTime = GetGameTime();
+		if (!(oldTeam == TEAM_UNASSIGNED || oldTeam == TEAM_SPECTATOR))
+		{
+			g_ClientPlayTime[client] += gameTime - g_ClientTeamTime[client];
+		}
+		g_ClientTeamTime[client] = gameTime;
 	}
 
 	if (g_SuppressTeamSwitchMessage) {

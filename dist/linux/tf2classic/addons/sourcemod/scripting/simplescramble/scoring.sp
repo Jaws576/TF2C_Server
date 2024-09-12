@@ -19,6 +19,7 @@
 enum ScoreMethod {
 	ScoreMethod_GameScore = 0,
 	ScoreMethod_HLXCE_Skill = 1,
+	ScoreMethod_GameScore_Time = 2
 };
 
 ConVar g_ConVar_ScoreMethod;
@@ -34,10 +35,11 @@ int g_ClientCachedScore[MAXPLAYERS];
 void PluginStartScoringSystem() {
 	g_ConVar_ScoreMethod = CreateConVar(
 		"ss_score_method", "0",
-		"The method used to score players during a scramble.\n\t0 - Use Game Score\n\t1 - Use HLX:CE Skill",
+		"The method used to score players during a scramble.\n\t0 - Use Game Score\n\t1 - Use HLX:CE Skill\n\t2 - Use Game Score per minute",
 		_,
 		true, 0.0,
-		true, 1.0
+		true, 1.0,
+		true, 2.0
 	);
 	g_ConVar_ScoreMethod.AddChangeHook(conVarChanged_ScoreMethod);
 	
@@ -71,8 +73,7 @@ static void conVarChanged_BotScore(ConVar convar, const char[] oldValue, const c
 }
 
 int ScoreClient(int client) {
-	int score = ScoreClientUnmodified(client);
-	int modifiedScore = score;
+	int modifiedScore = ScoreClientUnmodified(client);
 	if (modifiedScore < 0) {
 		// all score are clamped to zero to ensure correctness of math
 		modifiedScore = 0;
@@ -87,6 +88,8 @@ int ScoreClientUnmodified(int client) {
 	switch (g_ScoreMethod) {
 		case ScoreMethod_GameScore:
 			score = GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iTotalScore", _, client);
+		case ScoreMethod_GameScore_Time:
+			score = (GetEntProp(GetPlayerResourceEntity(), Prop_Send, "m_iTotalScore", _, client) * 360) / g_ClientPlayTime[client];
 		default:
 			score = g_ClientCachedScore[client];
 	}
