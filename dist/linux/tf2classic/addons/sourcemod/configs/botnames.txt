@@ -1,10 +1,8 @@
 Archimedes!
 AimBot
 AmNot
-Aperture Science Prototype XR7
-A Professional With Standards
 BeepBeepBoop
-Big Mean Mother Hubbard
+Big Mean MotherHubbard
 Black Mesa
 BoomerBile
 Cannon Fodder
@@ -26,9 +24,7 @@ D0g
 Force-A-Nature
 Freakin' Unbelievable
 Gentlemanne of Leisure
-GENTLE MANNE of LEISURE
 GLaDOS
-Glorified Toaster on Legs
 Grim Bloody Fable
 GutsAndGlory!
 Hat-Wearing MAN
@@ -55,7 +51,6 @@ Nobody
 Nom Nom Nom
 Not Me
 Numnutz
-One-Man Cheeseburger Apocalypse
 Poopy Joe
 Pow!
 RageQuit
@@ -113,7 +108,6 @@ Prelude to Victory
 Me Bottle o' Scrumpy!
 MetalCoward
 Karla the Complainer
-OUT OF MEMORY BELOW 640KB
 AWOL
 FastShot
 Fireworks!
@@ -130,15 +124,14 @@ Ultimate Chimera
 Underlord
 Economy Crash
 RoboJaws
-The Disembodied Spirit of Jaws
 Jaws 2
 Jaws: The Revenge
-Average wait_plaza Enjoyer
+wait_plaza Enjoyer
 TF2 Classic Advocate
 EMINIOMA
 ctf_2fort_improved
 cp_drillin
-11 Mapping Projects (and counting)
+11+ Mapping Projects
 Ignari
 Anchor God
 ctf_minefort_remake
