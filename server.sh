@@ -44,7 +44,6 @@ case $1 in
 			/bin/cp -rf /home/ubuntu/overrides/$name/* $path
 			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
 		done
-		./$0 start $2
 		;;
 	update)
           	./$0 stop $2
@@ -66,7 +65,6 @@ case $1 in
 			ln -s /app/server/tf2classic/* $path/tf2classic
 			ln -s /app/server/* $path
 		done
-		./$0 start $2
 		;;
 	command)
 	  	for path in /app/server?*;
