@@ -90,7 +90,6 @@ case $1 in
 			ln -s /app/server/tf2classic/* $path/tf2classic
 			ln -s /app/server/* $path
 		done
-		done
 		;;
 	command)
 	  	for path in /app/server?*;
