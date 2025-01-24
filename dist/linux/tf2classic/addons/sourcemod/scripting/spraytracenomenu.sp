@@ -68,7 +68,7 @@ new Handle:g_hSprayTimer = INVALID_HANDLE;
 new Handle:g_hHUDMessage;
 new bool:g_bCanUseHUD;
 
-public Plugin:myinfo =
+public Plugin:myinfo = 
 {
 	name = "Spray Tracer No Menu",
 	author = "Nican132, CptMoore, Lebson506th",
@@ -125,15 +125,7 @@ public OnMapStart() {
 
 public OnClientDisconnect(client) {
 	if(!GetConVarBool(g_arrCVars[GLOBAL]))
-	{
 		ClearVariables(client);
-	}
-	float vecPos[3];
-	TE_Start("Player Decal");
-	TE_WriteVector("m_vecOrigin", vecPos);
-	TE_WriteNum("m_nEntity", 0);
-	TE_WriteNum("m_nPlayer", client);
-	TE_SendToAll();
 }
 
 /*
@@ -183,7 +175,7 @@ stock CreateTimers() {
 	new Float:timer = GetConVarFloat( g_arrCVars[REFRESHRATE] );
 
 	if( timer > 0.0 )
-		g_hSprayTimer = CreateTimer( timer, CheckAllTraces, 0, TIMER_REPEAT);
+		g_hSprayTimer = CreateTimer( timer, CheckAllTraces, 0, TIMER_REPEAT);	
 }
 
 /*
