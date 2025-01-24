@@ -1,0 +1,28 @@
+// Advertisements 2.1
+// by Tsunami
+//
+// Types
+// -----
+// center: Center message
+// chat: Chat message
+// hint: Hint message
+// menu: Menu message
+// top: Top message
+//
+// Flags (optional)
+// -----
+// Accepts flags of admins that will not see the advertisement.
+// When omitted everyone will see the advertisement.
+// When left empty only admins will see the advertisement.
+
+"Advertisements"
+{
+   "1"
+    {
+        "chat"          "{lightblue}>>>AltTAB costs money to run. {green}You can help! {lightblue}Check out our donations page at {green}https://ko-fi.com/alttab_tf2c"
+    }
+   "2"
+    {
+        "chat"          "{tomato}>>>Votekick is disabled on these servers.{lightblue} You can use {tomato}/report {lightblue} to alert our staff to any issues"
+    }
+}
