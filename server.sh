@@ -91,6 +91,29 @@ case $1 in
 			ln -s /app/server/* $path
 		done
 		;;
+  	updatearchivenodownload)
+   			./$0 stop
+			sleep 3
+			git -C /home/ubuntu/TF2C_Server pull
+			rm -r /app/server/tf2classic
+			7za x /app/server/tf2classic.7z -o/app/server/
+			rm /app/server/tf2classic/bin/server_srv.so
+			ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so
+			/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
+          	/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
+		for path in /app/server?*;
+		do
+			name=$(basename $path)
+			rm -r $path/*
+			mkdir $path/tf2classic/
+			cp -r /app/server/tf2classic/addons/ $path/tf2classic
+			cp -r /app/server/tf2classic/cfg/ $path/tf2classic
+			/bin/cp -rf /home/ubuntu/overrides/$name/* $path
+   			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
+			ln -s /app/server/tf2classic/* $path/tf2classic
+			ln -s /app/server/* $path
+		done
+		;;
 	command)
 	  	for path in /app/server?*;
 		do
