@@ -42,6 +42,8 @@ ctf_well
 dom_hydro
 dom_krepost
 dom_oilcanyon
+dom_railway
+dom_sawtooth
 koth_badlands
 koth_frigid
 koth_harvest_final
@@ -65,7 +67,10 @@ plr_pipeline
 sd_doomsday
 tc_hydro
 td_caper
+td_sunnyside
 vip_badwater
 vip_harbor
 vip_mineside
 vip_trainyard
+vipr_2bridge
+vipr_drizzle

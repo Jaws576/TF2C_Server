@@ -148,3 +148,20 @@ Megabastard
 luxel scale 1
 0...1...2...3...4..
 func_fish_pool
+Damn Vaulters
+John AltTAB
+mpreg
+Killer Penguin
+Just a Week Away
+func_vehicle
+Cluck Herbert
+Constance Eminoma
+Huge Nader Über
+observer
+Amber Hand
+Sapphire Flame
+The Brick
+MeatGrinder
+Bomb
+-tools
+phyzzyfysics

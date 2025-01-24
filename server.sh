@@ -73,7 +73,7 @@ case $1 in
 			git -C /home/ubuntu/TF2C_Server pull
 			rm -r /app/server/tf2classic
 			wget $link -O /app/server/tf2classic.7z
-			7za x /app/server/tf2classic.7z/ -o/app/server/
+			7za x /app/server/tf2classic.7z -o/app/server/
 			rm /app/server/tf2classic/bin/server_srv.so
 			ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so
 			/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
