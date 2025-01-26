@@ -45,7 +45,25 @@ case $1 in
 			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
 		done
 		;;
-	update)
+  	updatesoft)
+   			./$0 stop $2
+	  		git -C /home/ubuntu/TF2C_Server pull
+	 		/app/updater/TF2CDownloaderLinux --update /app/server/
+			/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
+		   for path in /app/server?*;
+				do
+					name=$(basename $path)
+					rm -r $path/*
+					mkdir $path/tf2classic/
+					cp -r /app/server/tf2classic/addons/ $path/tf2classic
+					cp -r /app/server/tf2classic/cfg/ $path/tf2classic
+					/bin/cp -rf /home/ubuntu/overrides/$name/* $path
+		   			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
+					ln -s /app/server/tf2classic/* $path/tf2classic
+					ln -s /app/server/* $path
+				done
+				;;
+	updatefull)
           	./$0 stop $2
           	sleep 3
           	git -C /home/ubuntu/TF2C_Server pull
