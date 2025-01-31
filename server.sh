@@ -90,8 +90,8 @@ case $1 in
 			sleep 3
 			git -C /home/ubuntu/TF2C_Server pull
 			rm -r /app/server/tf2classic
-			wget $link -O /app/server/tf2classic.7z
-			7za x /app/server/tf2classic.7z -o/app/server/
+			wget $link -O /app/server/tf2classic.tar.zst
+			tar --zstd -xvf /app/server/tf2classic.tar.zst -C /app/server/
 			rm /app/server/tf2classic/bin/server_srv.so
 			ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so
 			/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
@@ -114,7 +114,7 @@ case $1 in
 			sleep 3
 			git -C /home/ubuntu/TF2C_Server pull
 			rm -r /app/server/tf2classic
-			7za x /app/server/tf2classic.7z -o/app/server/
+   			tar --zstd -xvf /app/server/tf2classic.tar.zst -C /app/server/
 			rm /app/server/tf2classic/bin/server_srv.so
 			ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so
 			/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
