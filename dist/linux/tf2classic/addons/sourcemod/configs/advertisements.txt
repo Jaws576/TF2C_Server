@@ -25,4 +25,7 @@
     {
         "chat"          "{tomato}>>>Votekick is disabled on these servers.{lightblue} You can use {tomato}/report {lightblue} to alert our staff to any issues"
     }
+   "3"
+    {
+        "chat"          "{lightblue}>>>Want to get notified when this server is looking for players? Join the AltTAB discord at {green}https://discord.gg/RRBGbPSvy7"
 }
