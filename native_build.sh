@@ -24,7 +24,7 @@ chown -R ubuntu /app/
 chmod +x /app/steamcmd/steamcmd.sh
 
 # Download Source SDK Base 2013 Dedicated Server
-su ubuntu -c "/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit"
+su ubuntu -c "/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 -beta previous2021 validate +quit"
 
 mkdir -p /app/server/ll-tests;
 
