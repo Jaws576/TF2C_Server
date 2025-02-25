@@ -27,9 +27,9 @@ case $1 in
 		for path in /app/$pattern;
 		do
 			name=$(basename $path)
-          		screen -S $name -p 0 -X stuff 'exit^M'
-          		echo "stopping server at "$path
-          	done
+          	screen -S $name -p 0 -X stuff 'exit^M'
+          	echo "stopping server at "$path
+        done
 		;;
 	restart)
 		./$0 stop $2
