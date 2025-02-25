@@ -15,7 +15,8 @@ case $1 in
 			params=$(< $path/serverparams.cfg)
    			if [ -n "$3" ]
 	  		then
-	 			params="-port "$3 $params
+	 			params="-port $3 $params"
+	 		fi
 			name=$(basename $path)
 			screen -S $name -X quit
 			screen -d -m -S $name $path/srcds_run $params
