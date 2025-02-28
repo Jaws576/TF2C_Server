@@ -67,6 +67,7 @@ SetupJoinMsg()
 	//prepare kv custom messages file
 	hKVCustomJoinMessages = CreateKeyValues("CustomJoinMessages");
 
+
 	if(!FileToKeyValues(hKVCustomJoinMessages, g_fileset))
 	{
 		KeyValuesToFile(hKVCustomJoinMessages, g_fileset);

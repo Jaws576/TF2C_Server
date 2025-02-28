@@ -103,7 +103,6 @@ public OnPluginStart()
 	//event hooks
 	HookEvent("player_disconnect", event_PlayerDisconnect, EventHookMode_Pre);
 
-
 	//country show
 	SetupCountryShow();
 
@@ -137,7 +136,6 @@ public OnMapStart()
 
 	//precahce and set downloads for sounds files for all players
 	LoadSoundFilesAll();
-
 
 	OnMapStart_JoinMsg();
 }
@@ -225,18 +223,15 @@ public Action:event_PlayerDisconnect(Handle:event, const String:name[], bool:don
 {
 	new client = GetClientOfUserId(GetEventInt(event, "userid"));
 
-	if( client && !IsFakeClient(client) && !dontBroadcast )
+	if( client && !IsFakeClient(client) && !dontBroadcast)
 	{
 		event_PlayerDisc_CountryShow(event, name, dontBroadcast);
 
 		OnClientDisconnect_JoinMsg();
 	}
 
-
 	return event_PlayerDisconnect_Suppress( event, name, dontBroadcast );
 }
-
-
 /*****************************************************************
 
 
@@ -262,6 +257,7 @@ bool:IsLanIP( String:src[16] )
 
 	return false;
 }
+
 
 ShowDefaultMessage(client)
 {
