@@ -1,7 +1,7 @@
 params="-game tf2classic -maxplayers 24 +map koth_viaduct"
 name=SRCDS
 
-if [ -z "$2" ]
+if [[ "all" == "$2" ]]
 then
         pattern="server?*"
 else
@@ -139,10 +139,17 @@ case $1 in
 	command)
 	  	for path in /app/server?*;
 		do
-  		name=$(basename $path)
+  			name=$(basename $path)
     		screen -S $name -p 0 -X stuff "$2^M"
 	  	done
 		;;
+  	list)
+                for path in /app/server?*;
+                do
+                	name=$(basename $path)
+                	echo $name
+                done
+                ;;
 	*)
  		echo "unknown command parameter"
 esac
