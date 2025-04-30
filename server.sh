@@ -142,6 +142,9 @@ case $1 in
   		name=$(basename $path)
     		screen -S $name -p 0 -X stuff "$2^M"
 	  	done
+		;;
+	*)
+ 		echo "unknown command parameter"
 esac
 
 exit 0
