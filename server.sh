@@ -144,12 +144,15 @@ case $1 in
 	  	done
 		;;
   	list)
-                for path in /app/server?*;
-                do
-                	name=$(basename $path)
-                	echo $name
-                done
-                ;;
+        for path in /app/server?*;
+        do
+            name=$(basename $path)
+            echo $name
+        done
+        ;;
+	online)
+ 		screen -ls
+	 	;;
 	*)
  		echo "unknown command parameter"
 esac
