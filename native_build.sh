@@ -77,3 +77,5 @@ ln -s /app/server/bin/steamclient.so /home/ubuntu/.steam/sdk32/steamclient.so;
 cp ./rc.local /etc/
 chown -R ubuntu /app/
 chown -R ubuntu /home/ubuntu/
+
+echo "alias server='bash ~/TF2C_Server/server.sh'" >> ~/.bash_aliases
