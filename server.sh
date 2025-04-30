@@ -37,7 +37,7 @@ case $1 in
 		$0 start $2
 		;;
 	patch)
-		$0 stop $2
+		$0 stop all
 		git -C /home/ubuntu/TF2C_Server pull
 		/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
 		for path in /app/server?*;
@@ -50,7 +50,7 @@ case $1 in
 		done
 		;;
   	updatesoft)
-   			$0 stop $2
+   			$0 stop all
 	  		git -C /home/ubuntu/TF2C_Server pull
 	 		/app/updater/TF2CDownloaderLinux --update /app/server/
 			/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
@@ -68,7 +68,7 @@ case $1 in
 				done
 				;;
 	updatefull)
-          	$0 stop $2
+          	$0 stop all
           	sleep 3
           	git -C /home/ubuntu/TF2C_Server pull
           	rm -r /app/server/tf2classic
@@ -89,7 +89,7 @@ case $1 in
 		done
 		;;
 	updatearchive)
-			$0 stop
+			$0 stop all
 			link=$2
 			sleep 3
 			git -C /home/ubuntu/TF2C_Server pull
@@ -114,7 +114,7 @@ case $1 in
 		done
 		;;
   	updatearchivenodownload)
-   			$0 stop
+   			$0 stop all
 			sleep 3
 			git -C /home/ubuntu/TF2C_Server pull
 			rm -r /app/server/tf2classic
