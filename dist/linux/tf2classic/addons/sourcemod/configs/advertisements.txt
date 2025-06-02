@@ -17,64 +17,16 @@
 
 "Advertisements"
 {
-	"donate"
-	{
-		"1"
-		{
-			"chat"			"{red}>>>AltTAB{lightblue} costs money to run. {green}You can help! {lightblue}Check out our donations page at {green}https://ko-fi.com/alttab_tf2c"
-		}
-		"2"
-		{
-			"chat"			"{red}>>>AltTAB{lightblue} costs money to run. {green}You can help! {lightblue}Check out our donations page at {green}https://ko-fi.com/alttab_tf2c"
-		}
-		"3"
-		{
-			"chat"			"{red}>>>AltTAB{lightblue} costs money to run. {green}You can help! {lightblue}Check out our donations page at {green}https://ko-fi.com/alttab_tf2c"
-		}
-	}
-	"reminder"
-	{
-		"1"
-		{
-			"chat"			"{tomato}>>>Votekick is disabled on these servers.{lightblue} You can use {tomato}/report {lightblue} to alert our staff to any issues"
-		}
-		"2"
-		{
-			"chat"			"{tomato}>>>Reminder:{lightblue} Use {tomato}/nominate {lightblue} to vote for your favourite maps!"
-		}
-		"3"
-		{
-			"chat"			"{tomato}>>>Reminder:{lightblue} You can vote to scramble the teams with {tomato}!votescramble"
-		}
-	}
-	"welcome"
-	{
-		"1"
-		{
-			"chat"			"{gold}>>>Welcome to {red}AltTAB{lightblue} - Hope you enjoy!"
-		}
-		"2"
-		{
-			"chat"			"{gold}>>>Welcome to {red}AltTAB{lightblue} - Please keep your arms and legs inside the vehicle at all times."
-		}
-		"3"
-		{
-			"chat"			"{gold}>>>Welcome to {red}AltTAB{lightblue} - Thanks, and have fun!"
-		}
-	}
-	"discord"
-	{
-		"1"
-		{
-			"chat"			"{lightblue}>>>Want to get notified when this server is looking for players? Join the {red}AltTAB{lightblue} discord at {green}https://discord.gg/RRBGbPSvy7"
-		}
-		"2"
-		{
-			"chat"			"{lightblue}>>>Have a server suggestion to make? Join the {red}AltTAB{lightblue} discord at {green}https://discord.gg/RRBGbPSvy7"
-		}
-		"3"
-		{
-			"chat"			"{lightblue}>>>We have a great little community going! Join the {red}AltTAB{lightblue} discord at {green}https://discord.gg/RRBGbPSvy7"
-		}
-	}
+   "1"
+    {
+        "chat"          "{lightblue}>>>AltTAB costs money to run. {green}You can help! {lightblue}Check out our donations page at {green}https://ko-fi.com/alttab_tf2c"
+    }
+   "2"
+    {
+        "chat"          "{tomato}>>>Votekick is disabled on these servers.{lightblue} You can use {tomato}/report {lightblue} to alert our staff to any issues"
+    }
+   "3"
+    {
+        "chat"          "{lightblue}>>>Want to get notified when this server is looking for players? Join the AltTAB discord at {green}https://discord.gg/RRBGbPSvy7"
+    }
 }
