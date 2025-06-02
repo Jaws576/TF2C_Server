@@ -100,6 +100,7 @@ case $1 in
 		ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so
 		/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
 		/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 -beta previous2021 validate +quit
+  		for path in /app/server?*;
 		do
 			name=$(basename $path)
 			rm -r $path/*
