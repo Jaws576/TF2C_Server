@@ -50,6 +50,7 @@ new String:g_filesettings[128];
 new bool:g_UseGeoIPCity = false;
 
 new Handle:g_CvarConnectDisplayType = INVALID_HANDLE;
+new Handle:g_CvarCustomAdminsOnly = INVALID_HANDLE;
 /*****************************************************************
 
 
@@ -96,6 +97,8 @@ public OnPluginStart()
 	CreateConVar("sm_cannounce_version", VERSION, "Connect announce replacement", FCVAR_REPLICATED|FCVAR_NOTIFY|FCVAR_DONTRECORD);
 
 	g_CvarConnectDisplayType = CreateConVar("sm_ca_connectdisplaytype", "1", "[1|0] if 1 then displays connect message after admin check and allows the {PLAYERTYPE} placeholder. If 0 displays connect message on client auth (earlier) and disables the {PLAYERTYPE} placeholder");
+
+	g_CvarCustomAdminsOnly = CreateConVar("sm_ca_connectadminsonly", "0", "[1|0] if 1 then only displays the custom join messages of players with the admin flag. Otherwise, displays any found on the database. Requires 'sm_ca_connectdisplaytype 1'");
 
 	BuildPath(Path_SM, g_fileset, 128, "data/cannounce_messages.txt");
 	BuildPath(Path_SM, g_filesettings, 128, "data/cannounce_settings.txt");
@@ -161,7 +164,24 @@ public OnClientPostAdminCheck(client)
 
 		if( !IsFakeClient(client) && GetClientCount(true) < MaxClients )
 		{
-			OnPostAdminCheck_JoinMsg(client, auth);
+			if(GetConVarInt(g_CvarCustomAdminsOnly) == 1)
+			{
+				new AdminId:id = GetUserAdmin(client);
+				new bool:has_kick;
+				has_kick = (id == INVALID_ADMIN_ID) ? false : GetAdminFlag(id, Admin_Kick);
+				if(has_kick)
+				{
+					OnPostAdminCheck_JoinMsg(client, auth);
+				}
+				else
+				{
+					ShowDefaultMessage(client);
+				}
+			}
+			else
+			{
+				OnPostAdminCheck_JoinMsg(client, auth);
+			}
 		}
 	}
 }

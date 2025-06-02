@@ -3,9 +3,9 @@ name=SRCDS
 
 if [[ "all" == "$2" ]]
 then
-        pattern="server?*"
+	pattern="server?*"
 else
-        pattern=$2
+	pattern=$2
 fi
 
 case $1 in
@@ -13,10 +13,10 @@ case $1 in
 		for path in /app/$pattern;
 		do
 			params=$(< $path/serverparams.cfg)
-   			if [ -n "$3" ]
-	  		then
-	 			params="-port $3 $params"
-	 		fi
+			if [ -n "$3" ]
+			then
+					params="-port $3 $params"
+			fi
 			name=$(basename $path)
 			screen -S $name -X quit
 			screen -d -m -S $name $path/srcds_run $params
@@ -26,10 +26,10 @@ case $1 in
 	stop)
 		for path in /app/$pattern;
 		do
-			name=$(basename $path)
-          	screen -S $name -p 0 -X stuff 'exit^M'
-          	echo "stopping server at "$path
-        done
+				name=$(basename $path)
+		screen -S $name -p 0 -X stuff 'exit^M'
+		echo "stopping server at "$path
+	done
 		;;
 	restart)
 		$0 stop $2
@@ -42,39 +42,39 @@ case $1 in
 		/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
 		for path in /app/server?*;
 		do
-			name=$(basename $path)
-			cp -r /app/server/tf2classic/addons/ $path/tf2classic
-			cp -r /app/server/tf2classic/cfg/ $path/tf2classic
-			/bin/cp -rf /home/ubuntu/overrides/$name/* $path
-			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
+				name=$(basename $path)
+				cp -r /app/server/tf2classic/addons/ $path/tf2classic
+				cp -r /app/server/tf2classic/cfg/ $path/tf2classic
+				/bin/cp -rf /home/ubuntu/overrides/$name/* $path
+				cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
 		done
 		;;
-  	updatesoft)
-   			$0 stop all
-	  		git -C /home/ubuntu/TF2C_Server pull
-	 		/app/updater/TF2CDownloaderLinux --update /app/server/
+	updatesoft)
+			$0 stop all
+			git -C /home/ubuntu/TF2C_Server pull
+			/app/updater/TF2CDownloaderLinux --update /app/server/
 			/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
-		   for path in /app/server?*;
-				do
-					name=$(basename $path)
-					rm -r $path/*
-					mkdir $path/tf2classic/
-					cp -r /app/server/tf2classic/addons/ $path/tf2classic
-					cp -r /app/server/tf2classic/cfg/ $path/tf2classic
-					/bin/cp -rf /home/ubuntu/overrides/$name/* $path
-		   			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
-					ln -s /app/server/tf2classic/* $path/tf2classic
-					ln -s /app/server/* $path
-				done
-				;;
+		for path in /app/server?*;
+			do
+				name=$(basename $path)
+				rm -r $path/*
+				mkdir $path/tf2classic/
+				cp -r /app/server/tf2classic/addons/ $path/tf2classic
+				cp -r /app/server/tf2classic/cfg/ $path/tf2classic
+				/bin/cp -rf /home/ubuntu/overrides/$name/* $path
+				cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
+				ln -s /app/server/tf2classic/* $path/tf2classic
+				ln -s /app/server/* $path
+			done
+			;;
 	updatefull)
-          	$0 stop all
-          	sleep 3
-          	git -C /home/ubuntu/TF2C_Server pull
-          	rm -r /app/server/tf2classic
-          	/app/updater/TF2CDownloaderLinux --install /app/server/
-          	/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
-          	/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
+		$0 stop all
+		sleep 3
+		git -C /home/ubuntu/TF2C_Server pull
+		rm -r /app/server/tf2classic
+		/app/updater/TF2CDownloaderLinux --install /app/server/
+		/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
+		/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
 		for path in /app/server?*;
 		do
 			name=$(basename $path)
@@ -83,24 +83,23 @@ case $1 in
 			cp -r /app/server/tf2classic/addons/ $path/tf2classic
 			cp -r /app/server/tf2classic/cfg/ $path/tf2classic
 			/bin/cp -rf /home/ubuntu/overrides/$name/* $path
-   			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
+			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
 			ln -s /app/server/tf2classic/* $path/tf2classic
 			ln -s /app/server/* $path
 		done
 		;;
 	updatearchive)
-			$0 stop all
-			link=$2
-			sleep 3
-			git -C /home/ubuntu/TF2C_Server pull
-			rm -r /app/server/tf2classic
-			wget $link -O /app/server/tf2classic.tar.zst
-			tar --zstd -xvf /app/server/tf2classic.tar.zst -C /app/server/
-			rm /app/server/tf2classic/bin/server_srv.so
-			ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so
-			/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
-          	/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
-		for path in /app/server?*;
+		$0 stop all
+		link=$2
+		sleep 3
+		git -C /home/ubuntu/TF2C_Server pull
+		rm -r /app/server/tf2classic
+		wget $link -O /app/server/tf2classic.7z
+		7z x /app/server/tf2classic.7z -o"/app/server/"
+		rm /app/server/tf2classic/bin/server_srv.so
+		ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so
+		/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
+		/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 -beta previous2021 validate +quit
 		do
 			name=$(basename $path)
 			rm -r $path/*
@@ -108,21 +107,20 @@ case $1 in
 			cp -r /app/server/tf2classic/addons/ $path/tf2classic
 			cp -r /app/server/tf2classic/cfg/ $path/tf2classic
 			/bin/cp -rf /home/ubuntu/overrides/$name/* $path
-   			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
+			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
 			ln -s /app/server/tf2classic/* $path/tf2classic
 			ln -s /app/server/* $path
 		done
 		;;
-  	updatearchivenodownload)
-   			$0 stop all
-			sleep 3
-			git -C /home/ubuntu/TF2C_Server pull
-			rm -r /app/server/tf2classic
-   			tar --zstd -xvf /app/server/tf2classic.tar.zst -C /app/server/
-			rm /app/server/tf2classic/bin/server_srv.so
-			ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so
-			/bin/cp -rf /home/ubuntu/TF2C_Server/dist/linux/* /app/server
-          	/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 validate +quit
+	updatearchivenodownload)
+		$0 stop all
+		sleep 3
+		git -C /home/ubuntu/TF2C_Server pull
+		rm -r /app/server/tf2classic
+		7z x /app/server/tf2classic.7z -o"/app/server/"
+		rm /app/server/tf2classic/bin/server_srv.so
+		ln -s /app/server/tf2classic/bin/server.so /app/server/tf2classic/bin/server_srv.so
+		/app/steamcmd/steamcmd.sh +force_install_dir /app/server/ +login anonymous +app_update 244310 -beta previous2021 validate +quit
 		for path in /app/server?*;
 		do
 			name=$(basename $path)
@@ -131,31 +129,32 @@ case $1 in
 			cp -r /app/server/tf2classic/addons/ $path/tf2classic
 			cp -r /app/server/tf2classic/cfg/ $path/tf2classic
 			/bin/cp -rf /home/ubuntu/overrides/$name/* $path
-   			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
+			cat $path/tf2classic/cfg/serveroverride.cfg >> $path/tf2classic/cfg/server.cfg
 			ln -s /app/server/tf2classic/* $path/tf2classic
 			ln -s /app/server/* $path
 		done
 		;;
 	command)
-	  	for path in /app/server?*;
+		for path in /app/server?*;
 		do
-  			name=$(basename $path)
-    		screen -S $name -p 0 -X stuff "$2^M"
-	  	done
+				name=$(basename $path)
+		screen -S $name -p 0 -X stuff "$2^M"
+		done
 		;;
-  	list)
-        for path in /app/server?*;
-        do
-            name=$(basename $path)
-            echo $name
-        done
-        ;;
+	list)
+		for path in /app/server?*;
+		do
+			name=$(basename $path)
+			echo $name
+		done
+		;;
 	online)
- 		screen -ls
-	 	;;
+		screen -ls
+		;;
 	*)
- 		echo "unknown command parameter"
+		echo "unknown command parameter"
 esac
 
 exit 0
+
 

@@ -145,8 +145,8 @@
 			"FireOutput"
 			{
 				"library"	"server"
-				"windows"	"@?FireOutput@COutputEvent@@QAEXPAVCBaseEntity@@0M@Z"
-				"linux"		"@_ZN12COutputEvent10FireOutputEP11CBaseEntityS1_f"
+				"windows"	"\x55\x8B\xEC\x81\xEC\x40\x01\x00\x00\x8B\xC1"
+				"linux"		"@_ZN17CBaseEntityOutput10FireOutputE9variant_tP11CBaseEntityS2_f"
 			}
 		}
 	}
